@@ -1,0 +1,4 @@
+.DS_Store
+node_modules
+create_folder_structure.sh
+remove_folders.sh
