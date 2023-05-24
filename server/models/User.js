@@ -18,6 +18,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     location:{
       type: String,
     // required: true,
@@ -51,27 +56,31 @@ const userSchema = new Schema(
     default: false,
 
     },
-    subscribed:{
-      type: Boolean,
-    default: false,
+    subscriptionDate:{
+      type: Date,
+    default: null,
 
+    },
+    subsLength:{
+      type: Number
     },
     // subscriptionExpiry:{
     //   type: Date,
 
     // },    
    
-    createdTrips: {
+    createdTrips:[ {
       type: Schema.Types.ObjectId,
       ref: "Trip",
-      // required: true,
-    },
+      // required: true, should not be required 
+    }],
 
   },
   // set this to use virtual below
   {
     toJSON: {
       virtuals: true,
+      // age calculation based on DOB
     },
   }
 );
