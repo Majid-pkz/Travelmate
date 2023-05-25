@@ -5,6 +5,10 @@ const resolvers = {
     users: async () => {
       return User.find({});
     },
+
+    trips: async () => {
+      return Trip.find({});
+    },
     
   }
 };
