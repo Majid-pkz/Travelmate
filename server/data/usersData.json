@@ -1,0 +1,12 @@
+
+[
+    {
+"username": "Sofi",
+  "email": "sofi@s.com",
+  "password":"Pass123456",
+  "isAdmin": false,
+ 
+  
+  "bio":"Backpacker from Finland travelling around Auz"
+    }
+]

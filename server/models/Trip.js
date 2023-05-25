@@ -44,7 +44,7 @@ const tripSchema = new Schema({
   tripType: {
     // enum??only 3 options: Roadtrip,fly, daytrip .....???
     type: String,
-    required: true,
+    required: false,
   },
   meetupPoint: {
     // landmark
