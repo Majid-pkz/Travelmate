@@ -5,8 +5,18 @@
   "email": "sofi@s.com",
   "password":"Pass123456",
   "isAdmin": false,
+  "createdTrips":"646f6e0f994ba4e04fdc61b8",
  
   
   "bio":"Backpacker from Finland travelling around Auz"
-    }
+    },
+    {
+      "username": "Ben",
+        "email": "ben@b.com",
+        "password":"Pass123456",
+        "isAdmin": false,
+       
+        
+        "bio":"28 years old  from Australi"
+          }
 ]

@@ -6,7 +6,16 @@
   "description":"Nothing",
   "departureLocation":"Sydney",
   "destination":"Perth"
+},
+{
+
+  "creator": "646f6b2aa5738dadb0b859a5",
+"title": "Ben Plan",
+"description":"road trip to east coast",
+"departureLocation":"Alice Spring",
+"destination":"Wollongong"
 }
 
-
 ]
+
+

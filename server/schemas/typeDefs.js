@@ -16,13 +16,15 @@ const typeDefs = gql`
     image: String
     verified: Boolean
     subscribed: Boolean
-    createdTrips: [Trip!]!
+    createdTrips: [Trip]
+    
     tripCount: Int!
+   
   }
   
   type Trip {
     _id: ID!
-    creator: User!
+    creator: User
     title: String!
     description: String!
     departureLocation: String!
@@ -34,6 +36,7 @@ const typeDefs = gql`
     approvedTrip: Boolean
     published: Boolean
     image: String
+    
   }
   
   
@@ -52,6 +55,11 @@ const typeDefs = gql`
   type Query {
     users: [User]
     trips: [Trip]
+    # Define a query with an ID parameter to return a single Trip object
+    trip(id: ID!): Trip
+
+    # Define a query with an ID parameter to return a single User object
+    user(id: ID!): User
     
   }
 `;
