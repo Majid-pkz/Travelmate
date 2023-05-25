@@ -38,5 +38,5 @@ const startApolloServer = async () => {
   };
   
 // Call the async function to start the server compare to activitiy 01 ?? which startApolloServer takkes two parameter(typeDefs,resolvers)???
-  startApolloServer();
+  startApolloServer(typeDefs, resolvers);
  
