@@ -21,6 +21,19 @@ const resolvers = {
       return await Trip.findById(args.id);
     },
     
+  },
+
+  Mutation:{
+    createUser: async(parent,{username, email, password})=>{
+      return await User.create({username, email, password});
+
+    },
+    // more parameter should be added later. this is just for test 
+    createTrip: async(parent,{creator, title, description, departureLocation, destination, tripType})=>{
+      return await Trip.create({creator, title, description, departureLocation, destination, tripType});
+
+    },
+
   }
 };
 
