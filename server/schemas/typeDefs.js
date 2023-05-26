@@ -43,7 +43,11 @@ const typeDefs = gql`
   
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
-    createTrip(creator: ID!, title: String!, description: String!, departureLocation: String!, destination: String!, startDate: String, endDate: String, tripType: String!, meetupPoint: String, approvedTrip: Boolean, published: Boolean, image: String): Trip
+    createTrip(creator: ID!, title: String!, description: String!,
+       departureLocation: String!, destination: String!, startDate: String,
+        endDate: String, tripType: String!, meetupPoint: String, 
+        approvedTrip: Boolean, published: Boolean, image: String): Trip
+    updateUser(id: ID!,username:String!): User
   }
   
   schema {
