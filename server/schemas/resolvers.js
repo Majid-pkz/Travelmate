@@ -28,6 +28,16 @@ const resolvers = {
       return await User.create({username, email, password});
 
     },
+
+    updateUser:async (parent, {id,username}) => {
+      // Find and update 
+      return await User.findOneAndUpdate(
+        { _id: id }, 
+        { username },
+        // Return the newly updated object instead of the original
+        { new: true }
+      );
+    },
     // more parameter should be added later. this is just for test 
     createTrip: async(parent,{creator, title, description, departureLocation, destination, tripType})=>{
       return await Trip.create({creator, title, description, departureLocation, destination, tripType});
