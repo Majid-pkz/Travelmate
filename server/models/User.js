@@ -72,7 +72,7 @@ const userSchema = new Schema(
     createdTrips:[ {
       type: Schema.Types.ObjectId,
       ref: "Trip",
-      // required: true, should not be required 
+      
     }],
 
   },

@@ -35,6 +35,10 @@ const tripSchema = new Schema({
     // Sets a default value of 1 weeks from now
     default: () => new Date(+new Date() + 7 * 24 * 60 * 60 * 1000),
   },
+  travelmates:[{
+    type: Schema.Types.ObjectId,
+    ref: "User", 
+  }],
 
   // Duration: {
   //   type: Number,
@@ -42,9 +46,9 @@ const tripSchema = new Schema({
   // },
 
   tripType: {
-    // enum??only 3 options: Roadtrip,fly, daytrip .....???
-    type: String,
-    required: false,
+    type: Schema.Types.ObjectId,
+    ref: "TripType",
+    required: true,
   },
   meetupPoint: {
     // landmark
@@ -64,5 +68,5 @@ const tripSchema = new Schema({
   },
 });
 
-const Trip = model('trip', tripSchema);
+const Trip = model('Trip', tripSchema);
 module.exports = Trip;
