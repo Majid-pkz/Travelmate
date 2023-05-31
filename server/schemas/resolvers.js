@@ -1,37 +1,40 @@
 const { Trip, User, TripType } = require("../models");
-
+// const {AuthenticationError} = require('apollo-server-express')
+const {ApolloError} = require('apollo-server-express')
 const resolvers = {
   Query: {
     users:  async () => {
-      const users = await User.find({}).populate('createdTrips');
-      console.log(users);
+      const users = await User.find({}).populate('createdTrips');      
       return users;
-    },
-
-   
-    
-    
+    }, 
 
     // Define a resolver to retrieve individual user
     user: async (parent, args) => {
       // Use the parameter to find the matching user in the collection
-     
-      return User.findById(args.id).populate('createdTrips');
-    },
+     let user = await User.findById(args.id).populate('createdTrips');
+    
+     if(!user){
+      throw new ApolloError ('user does not exist')
 
+     }
+     return user
+
+      // return User.findById(args.id).populate('createdTrips');
+    },
     
     
    trips: async () => {
-      const trips = await Trip.find({}).populate('creator').populate('tripType').populate('travelmates');
-      console.log(trips);
+      const trips = await Trip.find({}).populate('creator').populate('tripType').populate('travelmates');     
       return trips;
     },
+
 
     // Define a resolver to retrieve single trip
     trip: async (parent, args) => {
       // Use the parameter to find the matching trip in the collection
       return await Trip.findById(args.id).populate("creator").populate('tripType').populate('travelmates');
     },
+
     tripTypes: async () => {
       return await TripType.find({});
     },
@@ -39,6 +42,7 @@ const resolvers = {
       // Use the parameter to find the matching tripType in the collection
       return await TripType.findById(args.id);
     },
+
   },
 
   Mutation: {
@@ -63,14 +67,15 @@ const resolvers = {
 
       // this await await does not seems to be correct but working  needs review
 
-      let trip = (await (await Trip.create(params)).populate("tripType")).populate("creator");
-      console.log(params.creator)
+      let trip = await  Trip.create(params);
+     
      await User.findOneAndUpdate(
         { _id: params.creator },
         { $addToSet: { createdTrips: trip._id } },
         {new:true}
       );
-      
+      // trip =  await Trip.findById(trip._id).populate('creator').populate('tripType')
+      trip =  await trip.populate('creator tripType')
       return trip;
     },
 
@@ -80,13 +85,11 @@ const resolvers = {
 
     joinTrip: async (parent, { id,userJoining }) => {
    
-    const userData= await  Trip.findOneAndUpdate(
+    let userData= await  Trip.findOneAndUpdate(
       { _id: id },
       { $addToSet: { travelmates: userJoining } },
-      {new:true});
-
-     
-     
+      {new:true}); 
+      userData = await userData.populate('creator travelmates tripType')   
  
       return  userData
     },
