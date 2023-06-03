@@ -50,6 +50,12 @@ const typeDefs = gql`
     label: String!
   }
 
+  type Profile {
+    _id: ID!
+    name: String!
+    email: String!
+    password: String!
+  }
   
   
   type Mutation {
@@ -62,6 +68,9 @@ const typeDefs = gql`
     createTripType( tripType: String!): TripType
     removeTrip(id:ID!):Trip
     joinTrip(id: ID!, userJoining: ID!):Trip
+    createProfile(name: String!, email: String!, password: String!): Profile
+    updateProfile(id: ID!, name:String!, email:String, password:String): Profile
+    deleteProfile(id: ID!): Profile
   }
   
   
@@ -70,6 +79,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     trips: [Trip]
+    profiles: [Profile]
     # Define a query with an ID parameter to return a single Trip object
     trip(id: ID!): Trip
     usersAndItsTrip:[User]
@@ -79,7 +89,7 @@ const typeDefs = gql`
 
     tripTypes:[TripType]
     tripType(id: ID!): TripType
-    
+    profile(id: ID!): Profile
 
     
   }

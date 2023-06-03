@@ -6,17 +6,7 @@ const userSchema = new Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
-    },
-    password: {
-      type: String,
-      required: true,
+      trim:true
     },
     isAdmin: {
       type: Boolean,
@@ -72,9 +62,14 @@ const userSchema = new Schema(
     createdTrips:[ {
       type: Schema.Types.ObjectId,
       ref: "Trip",
-      
+      // required: true, should not be required 
     }],
 
+    profileUser: {
+      type: Schema.Types.ObjectId,
+      ref: "Profile",
+      required: true,
+    },
   },
   // set this to use virtual below
   {

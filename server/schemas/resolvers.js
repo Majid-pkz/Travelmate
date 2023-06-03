@@ -1,4 +1,4 @@
-const { Trip, User, TripType } = require("../models");
+const { Trip, User, TripType, Profile } = require("../models");
 // const {AuthenticationError} = require('apollo-server-express')
 const {ApolloError} = require('apollo-server-express')
 const resolvers = {
@@ -43,6 +43,16 @@ const resolvers = {
       return await TripType.findById(args.id);
     },
 
+    profiles: async () => {
+      return await Profile.find({})
+    },
+
+    // Define a resolver to retrieve single profile
+    profile: async (parent, args) => {
+      // Use the parameter to find the matching profile in the collection
+      return await Profile.findById(args.id).populate('User').populate('Trip');
+    }
+
   },
 
   Mutation: {
@@ -60,6 +70,10 @@ const resolvers = {
         { new: true }
       );
     },
+
+    // deleteUser: async (parent, { id }) => {
+    //   return await User.findOneAndDelete({ _id: id });
+    // },
 
     //   could be destructure later. this is just for test --- note: destructure did not work for me. find out why?
     createTrip: async (parent, params) => {
@@ -98,6 +112,26 @@ const resolvers = {
     createTripType: async (parent, tripType) => {
       return await TripType.create(tripType);
     },
+
+    createProfile: async(parent,{name, email, password})=>{
+      return await Profile.create({name, email, password});
+
+    },
+
+    updateProfile:async (parent, {id,name}) => {
+      return await Profile.findOneAndUpdate(
+        { _id: id },
+        { name },
+        { new: true }
+      );
+    },
+
+    deleteProfile: async (parent, { id }) => {
+      return await Profile.findOneAndDelete({ _id: id });
+    }
+
+
+
   },
 };
 

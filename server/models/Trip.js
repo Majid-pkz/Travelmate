@@ -48,7 +48,8 @@ const tripSchema = new Schema({
   tripType: {
     type: Schema.Types.ObjectId,
     ref: "TripType",
-    required: true,
+    // changed this to false - VAL, was previously true as of 3rd of June
+    required: false,
   },
   meetupPoint: {
     // landmark
