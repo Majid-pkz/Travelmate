@@ -4,21 +4,11 @@ const typeDefs = gql`
   # Define which fields are accessible from the  models
   type User {
     _id: ID!
-    username: String!
+    firstname: String!
+    lastname: String!
     email: String!
     password: String!
-    location: String
-    joinedDate: String
-    gender: String
-    age: Int
-    bio: String
-    interests: [Interest]
-    image: String
-    verified: Boolean
-    subscribed: Boolean
-    createdTrips: [Trip!]
-    
-    tripCount: Int!
+    isAdmin: Boolean
    
   }
   
@@ -52,25 +42,54 @@ const typeDefs = gql`
 
   type Profile {
     _id: ID!
-    name: String!
-    email: String!
-    password: String!
+    profileUser: User
+    location: String
+    joinedDate: String
+    gender: String
+    age: Int
+    bio: String
+    interests: [Interest]
+    image: String
+    verified: Boolean
+    subscribed: Boolean
+    createdTrips: [Trip!]
+    
+    tripCount: Int!
   }
   
   
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): User
+    createUser( firstname: String!, lastname: String!, email: String!, password: String!,
+      isAdmin: Boolean): User
+
+    createProfile(profileUser:ID!, location: String, joinedDate: String, gender: String,
+        age: Int, bio: String, interests:ID!,image: String, verified: Boolean,
+        subscribed: Boolean, createdTrips:ID, tripCount: Int): Profile
+
     createTrip(creator: ID!, title: String!, description: String!,
        departureLocation: String!, destination: String!, startDate: String,
-        endDate: String, tripType: ID!, meetupPoint: String, 
+        endDate: String, tripType: ID, meetupPoint: String, 
         approvedTrip: Boolean, published: Boolean, image: String): Trip
-    updateUser(id: ID!,username:String!): User
+
     createTripType( tripType: String!): TripType
+    createInterests( label: String!): Interest
+
+    updateUser(id: ID!, firstname: String, lastname: String, email: String, password: String): User
+
+    updateProfile(id: ID!, location: String, gender: String, age: Int, bio: String,
+      interests: ID, image: String, verified: Boolean,
+      subscribed: Boolean): Profile
+
+   
+
     removeTrip(id:ID!):Trip
-    joinTrip(id: ID!, userJoining: ID!):Trip
-    createProfile(name: String!, email: String!, password: String!): Profile
-    updateProfile(id: ID!, name:String!, email:String, password:String): Profile
-    deleteProfile(id: ID!): Profile
+
+    deleteProfile(id: ID!): Profile 
+
+    # delet user and profile deletion on delete
+    deleteUser(id:ID!): User
+
+    joinTrip(id: ID!, userJoining: ID!):Trip   
   }
   
   
@@ -80,16 +99,16 @@ const typeDefs = gql`
     users: [User]
     trips: [Trip]
     profiles: [Profile]
-    # Define a query with an ID parameter to return a single Trip object
-    trip(id: ID!): Trip
     usersAndItsTrip:[User]
-
-    # Define a query with an ID parameter to return a single User object
-    user(id: ID!): User
-
     tripTypes:[TripType]
+    interests:[Interest]
+    # Define a query with an ID parameter to return a single of that  object
+
+    trip(id: ID!): Trip    
+    user(id: ID!): User    
     tripType(id: ID!): TripType
     profile(id: ID!): Profile
+    interest(id:ID!): Interest
 
     
   }
