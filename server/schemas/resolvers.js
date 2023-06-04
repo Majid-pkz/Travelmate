@@ -4,14 +4,14 @@ const {ApolloError} = require('apollo-server-express')
 const resolvers = {
   Query: {
     users:  async () => {
-      const users = await User.find({}).populate('createdTrips');      
+      const users = await User.find({});      
       return users;
     }, 
 
     // Define a resolver to retrieve individual user
     user: async (parent, args) => {
       // Use the parameter to find the matching user in the collection
-     let user = await User.findById(args.id).populate('createdTrips');
+     let user = await User.findById(args.id);
     
      if(!user){
       throw new ApolloError ('user does not exist')
@@ -44,28 +44,27 @@ const resolvers = {
     },
 
     profiles: async () => {
-      return await Profile.find({})
+      return await Profile.find({}).populate('profileUser').populate('createdTrips');
     },
 
     // Define a resolver to retrieve single profile
     profile: async (parent, args) => {
       // Use the parameter to find the matching profile in the collection
-      return await Profile.findById(args.id).populate('User').populate('Trip');
+      return await Profile.findById(args.id).populate('profileUser').populate('createdTrips');
     }
 
   },
 
   Mutation: {
     //destructure
-    createUser: async (parent, { username, email, password }) => {
-      return await User.create({ username, email, password });
+    createUser: async (parent, { firstname, lastname, email, password }) => {
+      return await User.create({ firstname, lastname, email, password });
     },
 
-    updateUser: async (parent, { id, username }) => {
+    updateUser: async (parent, { id }) => {
       // Find and update
       return await User.findOneAndUpdate(
         { _id: id },
-        { username },
         // Return the newly updated object instead of the original
         { new: true }
       );
@@ -88,16 +87,15 @@ const resolvers = {
         { $addToSet: { createdTrips: trip._id } },
         {new:true}
       );
-      // trip =  await Trip.findById(trip._id).populate('creator').populate('tripType')
       trip =  await trip.populate('creator tripType')
       return trip;
     },
 
-    removeTrip: async (parent, { id ,Something}) => {
+    removeTrip: async (parent, { id }) => {
       return Trip.findOneAndDelete({ _id: id });
     },
 
-    joinTrip: async (parent, { id,userJoining }) => {
+    joinTrip: async (parent, { id, userJoining }) => {
    
     let userData= await  Trip.findOneAndUpdate(
       { _id: id },
@@ -113,15 +111,13 @@ const resolvers = {
       return await TripType.create(tripType);
     },
 
-    createProfile: async(parent,{name, email, password})=>{
-      return await Profile.create({name, email, password});
-
+    createProfile: async(parent, params)=>{
+      return await Profile.create(params);
     },
 
-    updateProfile:async (parent, {id,name}) => {
+    updateProfile:async (parent, {id}) => {
       return await Profile.findOneAndUpdate(
         { _id: id },
-        { name },
         { new: true }
       );
     },
@@ -129,8 +125,6 @@ const resolvers = {
     deleteProfile: async (parent, { id }) => {
       return await Profile.findOneAndDelete({ _id: id });
     }
-
-
 
   },
 };

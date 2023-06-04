@@ -1,39 +1,83 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const profileSchema = new Schema({
-
-    name: {
-        type: String,
-        required: true,
+    
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [/.+@.+\..+/, 'Must use a valid email address'],
+    location:{
+      type: String,
+    // required: true,
     },
-    password: {
-        type: String,
-        required: true,
+    joinedDate:{
+      type: Date,
+
     },
+    gender:{
+      type: String,
 
-})
+    },
+    age:{
+      type: Number,
 
-// hash user password
-profileSchema.pre('save', async function (next) {
-    if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
-    }
-  
-    next();
-  });
-  
-  // custom method to compare and validate password for logging in
-  profileSchema.methods.isCorrectPassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-  };
+    },
+    bio:{
+      type: String,
+
+    },
+    interests:{
+      type: String,
+
+    },
+    image:{
+      type: String,
+
+    },
+    verified:{
+      type: Boolean,
+    default: false,
+
+    },
+    subscriptionDate:{
+      type: Date,
+    default: null,
+
+    },
+    subsLength:{
+      type: Number
+    },
+    // subscriptionExpiry:{
+    //   type: Date,
+
+    // },  
+   
+    createdTrips:[ {
+      type: Schema.Types.ObjectId,
+      ref: "Trip",
+      // required: true, should not be required 
+    }],
+
+    profileUser: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
+  },
+  // set this to use virtual below
+  {
+    toJSON: {
+      virtuals: true,
+      // age calculation based on DOB
+    },
+  }
+);
+
+// when we query a user, we'll also get another field called `TripCount` with the number of created trip
+profileSchema.virtual('tripCount').get(function () {
+  return this.createdTrips.length;
+});
 
 const Profile = model('Profile', profileSchema);
 module.exports = Profile;
