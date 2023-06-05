@@ -20,11 +20,29 @@ const resolvers = {
      return user     
     },
 
+
+    //populate('classes').populate({
+    //   path: 'classes',
+    //   populate: 'professor'
+    // });
+
+    // profiles:  async () => {
+    //   const profiles = await Profile.find({}).populate('profileUser').populate('interests').
+    //   populate('createdTrips').;     
+    //   return profiles;
+    // }, 
     profiles:  async () => {
-      const profiles = await Profile.find({}).populate('profileUser').populate('interests').
-      populate('createdTrips');     
+      const profiles = await Profile.find({}).populate('createdTrips').populate({
+          path: 'createdTrips',
+          populate: 'creator tripType'
+        }).populate('profileUser').populate('interests');   
       return profiles;
     }, 
+
+
+
+
+
 
     profile: async (parent, args) => {
       // Use the parameter to find the matching user in the collection
@@ -102,14 +120,18 @@ const resolvers = {
       // this await await does not seems to be correct but working  needs review
 
       let trip = await  Trip.create(params);
-     
+     console.log('--------------params:  ',params)
+     console.log('--------------trip._id:  ',trip._id)
+     console.log('--------------trip.id:  ',trip.id)
+     console.log('--------params.creator:   ',params.creator)
      await Profile.findOneAndUpdate(
-        { _id: params.creator },
-        { $addToSet: { createdTrips: trip._id } },
+        { profileUser: params.creator },
+        { $addToSet: { createdTrips: trip.id } },
         {new:true}
       );
       // trip =  await Trip.findById(trip._id).populate('creator').populate('tripType')
       trip =  await trip.populate('creator tripType travelmates')
+      console.log(trip)
       return trip;
     },
 
@@ -129,8 +151,11 @@ const resolvers = {
 
     // updateUser: async (parent, params) => {
     //   // Find and update
+    //   console.log('--------------------------------------------this is param:',params)
+    //   console.log('-----------------------this is params.id:',params.id)
+    //   console.log('--------------------------this is params._id:',params._id)
     //   return await User.findOneAndUpdate(
-    //     { _id: params._id },
+    //     { _id: params.id },
     //     params,
     //     // Return the newly updated object instead of the original
     //     { new: true }
