@@ -1,39 +1,87 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
 
-const profileSchema = new Schema({
 
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [/.+@.+\..+/, 'Must use a valid email address'],
-    },
-    password: {
-        type: String,
-        required: true,
+const profileSchema = new Schema(
+  {
+    profileUser: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
 
-})
 
-// hash user password
-profileSchema.pre('save', async function (next) {
-    if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
-    }
+     location:{
+      type: String,
+    // required: true,
+    },
+    joinedDate:{
+      type: Date,
+
+    },
+    gender:{
+      type: String,
+
+    },
+    age:{
+      type: Number,
+
+    },
+    bio:{
+      type: String,
+
+    },
+    interests:[{
+      type: Schema.Types.ObjectId,
+      ref: "Interest", 
+    }],
+    image:{
+      type: String,
+
+    },
+    verified:{
+      type: Boolean,
+    default: false,
+
+    },
+    subscriptionDate:{
+      type: Date,
+    default: null,
+
+    },
+    subsLength:{
+      type: Number
+    },
+    // subscriptionExpiry:{
+    //   type: Date,
+
+    // },    
+   
+    createdTrips:[ {
+      type: Schema.Types.ObjectId,
+      ref: "Trip",
+      // required: true, should not be required 
+    }],
+
+   
+ 
+},
+ // set this to use virtual below
+ {
+  toJSON: {
+    virtuals: true,
+    // age calculation based on DOB
+  },
+}
+);
+
+// when we query a user, we'll also get another field called `TripCount` with the number of created trip
+profileSchema.virtual('tripCount').get(function () {
+  return this.createdTrips.length;
+});
+
+
   
-    next();
-  });
-  
-  // custom method to compare and validate password for logging in
-  profileSchema.methods.isCorrectPassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-  };
+
 
 const Profile = model('Profile', profileSchema);
 module.exports = Profile;
