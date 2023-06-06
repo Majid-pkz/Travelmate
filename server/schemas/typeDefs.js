@@ -56,11 +56,16 @@ const typeDefs = gql`
     
     tripCount: Int!
   }
+
+  type Auth {
+    token: ID!
+    user: User
+  }
   
   
   type Mutation {
     createUser( firstname: String!, lastname: String!, email: String!, password: String!,
-      isAdmin: Boolean): User
+      isAdmin: Boolean): Auth
 
     createProfile(profileUser:ID!, location: String, joinedDate: String, gender: String,
         age: Int, bio: String, interests:ID!,image: String, verified: Boolean,
@@ -94,6 +99,8 @@ const typeDefs = gql`
     removeAnInterest(id:ID!, interestId:ID!):Profile
 
     addAnInterest(id:ID!, interestId:ID!):Profile
+
+    login(email: String!, password: String!): Auth
 
 
   }
