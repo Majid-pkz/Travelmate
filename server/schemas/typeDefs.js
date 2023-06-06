@@ -89,7 +89,13 @@ const typeDefs = gql`
     # delet user and profile deletion on delete
     deleteUser(id:ID!): User
 
-    joinTrip(id: ID!, userJoining: ID!):Trip   
+    joinTrip(id: ID!, userJoining: ID!):Trip  
+    
+    removeAnInterest(id:ID!, interestId:ID!):Profile
+
+    addAnInterest(id:ID!, interestId:ID!):Profile
+
+
   }
   
   

@@ -215,6 +215,29 @@ const resolvers = {
       return await userData;
 
     },
+  // removing a previously added interest from a profile
+    removeAnInterest:  async (parent, { id,interestId }) => {
+   
+      let profData= await  Profile.findOneAndUpdate(
+        { _id: id },
+        { $pull: { interests: interestId } },
+        {new:true}); 
+        profData = await profData.populate('profileUser interests createdTrips')   
+   
+        return await profData
+      },
+      // add an interest from the list to  a profile
+    addAnInterest:  async (parent, { id,interestId }) => {
+   
+      let profData= await  Profile.findOneAndUpdate(
+        { _id: id },
+        { $addToSet: { interests: interestId } },
+        {new:true}); 
+        profData = await profData.populate('profileUser interests createdTrips')   
+   
+        return await profData
+      },
+
 
    
 
