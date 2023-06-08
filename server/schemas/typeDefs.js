@@ -123,7 +123,7 @@ const typeDefs = gql`
     profile(id: ID!): Profile
     interest(id:ID!): Interest
 
-    
+    me: Profile
   }
 `;
 

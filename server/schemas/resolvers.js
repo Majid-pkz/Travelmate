@@ -40,14 +40,26 @@ const resolvers = {
       return profiles;
     }, 
 
+    me: async (parent, args, context) => {
+      console.log('00000000000000000000000000000000000000000000000------------------------',context)
+      console.log('------------------------this is context.user',context.user)
+      
+      if (context.user) {
+        const profiles = await Profile.findOne({profileUser:context.user._id  }).populate('createdTrips').populate({
+          path: 'createdTrips',
+          populate: 'creator tripType'
+        }).populate('profileUser').populate('interests');   
+      return profiles;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
 
-
-
-
-
+ 
+  
     profile: async (parent, args) => {
       // Use the parameter to find the matching user in the collection
-     let profile = await Profile.findById(args.id).populate('profileUser').populate('interest').
+      console.log(args)
+     let profile = await Profile.findById(args.id).populate('profileUser').populate('interests').
      populate('createdTrips');
     
      if(!profile){
@@ -94,10 +106,12 @@ const resolvers = {
      return inter     
     },
 
-
   },
+  
 
   Mutation: {
+
+
 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -122,8 +136,6 @@ const resolvers = {
 
 
 
-
-
     //destructure
     createUser: async (parent, {  firstname, lastname, email, password, isAdmin }) => {
       const user = await User.create({ firstname, lastname, email, password,isAdmin });
@@ -132,23 +144,28 @@ const resolvers = {
 
     },
 
-    createProfile: async(parent,params)=>{
+    createProfile: async(parent,params,context)=>{
+      if (context.user) {
       return (await Profile.create(params)).populate('profileUser interests')
+      }
+      throw new AuthenticationError('You need to be logged in!');
 
     },
+
     createTripType: async (parent, tripType) => {
       return await TripType.create(tripType);
     },
+
 
     createInterests: async (parent, interests) => {
       return await Interest.create(interests);
     },
 
-    createTrip: async (parent, params) => {
+    createTrip: async (parent, params, context) => {
       //  const {creator, title, description, departureLocation, destination, tripType} = params
 
       // this await await does not seems to be correct but working  needs review
-
+      if (context.user) {
       let trip = await  Trip.create(params);
      console.log('--------------params:  ',params)
      console.log('--------------trip._id:  ',trip._id)
@@ -163,18 +180,25 @@ const resolvers = {
       trip =  await trip.populate('creator tripType travelmates')
       console.log(trip)
       return trip;
+
+     }
+     throw new AuthenticationError('You need to be logged in!');
     },
 
 
 
-    updateUser: async (parent, { id, firstname, lastname, email, password }) => {
+    updateUser: async (parent, { id, firstname, lastname, email, password }, context) => {
       // Find and update
+         if (context.user) {
       return await User.findOneAndUpdate(
         { _id: id },
         { firstname, lastname, email, password },
         // Return the newly updated object instead of the original
         { new: true }
       );
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
     // note the following version looks the same as above in studio gql but does not update.. why??
     // maybe params.id not params._id
@@ -205,26 +229,33 @@ const resolvers = {
     // },
  
 
-    updateProfile:async (parent, params) => {
-  
+    updateProfile:async (parent, params, context) => {
+      if (context.user) {  
       console.log(params.id)
       return await Profile.findOneAndUpdate(
         { _id: params.id },
         params,
         { new: true }
       ).populate('profileUser interests createdTrips');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 
 
 
 
-        removeTrip: async (parent, { id }) => {
+        removeTrip: async (parent, { id }, context) => {
+          if (context.user) {
 
       return await Trip.findOneAndDelete({ _id: id });
+          }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
-    joinTrip: async (parent, { id,userJoining }) => {
+    joinTrip: async (parent, { id,userJoining }, context) => {
+
+      if (context.user) {
    
     let userData= await  Trip.findOneAndUpdate(
       { _id: id },
@@ -232,21 +263,29 @@ const resolvers = {
       {new:true}); 
       userData = await userData.populate('creator travelmates tripType')   
  
-      return  userData
+       return  userData
+       }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
     
 
    
 
    // delete a user and consequently delete its profile 
-    deleteUser: async (parent, { id }) => {
+    deleteUser: async (parent, { id }, context) => {
+      if (context.user) {
+      
       let userData = await User.findOneAndDelete({ _id: id })
       let profilData = await Profile.findOneAndDelete({profileUser:id})
       return await userData;
+       }
+    throw new AuthenticationError('You need to be logged in!');
 
     },
   // removing a previously added interest from a profile
-    removeAnInterest:  async (parent, { id,interestId }) => {
+    removeAnInterest:  async (parent, { id,interestId }, context) => {
+      if (context.user) {
    
       let profData= await  Profile.findOneAndUpdate(
         { _id: id },
@@ -255,9 +294,12 @@ const resolvers = {
         profData = await profData.populate('profileUser interests createdTrips')   
    
         return await profData
+       }
+       throw new AuthenticationError('You need to be logged in!');
       },
       // add an interest from the list to  a profile
-    addAnInterest:  async (parent, { id,interestId }) => {
+    addAnInterest:  async (parent, { id,interestId }, context) => {
+      if (context.user) {
    
       let profData= await  Profile.findOneAndUpdate(
         { _id: id },
@@ -266,14 +308,16 @@ const resolvers = {
         profData = await profData.populate('profileUser interests createdTrips')   
    
         return await profData
+        }
+      throw new AuthenticationError('You need to be logged in!');
       },
 
 
    
 
+    }
 
-
-  },
+ 
 };
 
 
