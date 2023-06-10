@@ -1,19 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache,createHttpLink, } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
 
-import Home from './pages/Trip';
+import Home from './pages/Home/Home';
+import Signup from './pages/Signup';
 import Mdb from './pages/MDB'
-import { setContext } from '@apollo/client/link/context'; 
+import { setContext } from '@apollo/client/link/context';
 import Login from './pages/Login';
 import RecipeReviewCard from './pages/TestCard'
 
-import Header from './components/Header';
+import Header from './components/Header/Header';
 
 const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
-  
+
 });
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -33,32 +34,37 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+        {/* <div className="flex-column justify-flex-start min-100-vh"> */}
           <Header />
-          <div className="container">
+          {/* <div className="container"> */}
             <Routes>
-            <Route 
-                path="/login" 
+              <Route
+                path="/login"
                 element={<Login />}
               />
-               {/* <Route 
-                path="/" 
-                element={<Home />}
-              /> */}
               <Route 
-                path="/trips" 
+                path="/signup" 
+                element={<Signup />}
+              />
+              <Route
+                path="/"
                 element={<Home />}
               />
-              <Route 
-                path="/single" 
+              <Route
+                path="/trips"
+                element={<Home />}
+              />
+              <Route
+                path="/single"
                 element={<RecipeReviewCard />}
               />
 
-            <Route 
-                path="/mdb" 
+              <Route
+                path="/mdb"
                 element={<Mdb />}
               />
-              
+
+
 
 
               {/* <Route 
@@ -69,10 +75,7 @@ function App() {
                 path="/login" 
                 element={<Login />}
               />
-              <Route 
-                path="/signup" 
-                element={<Signup />}
-              />
+              
               <Route 
                 path="/me" 
                 element={<RecipeReviewCard />}
@@ -86,9 +89,9 @@ function App() {
                 element={<SingleThought />}
               /> */}
             </Routes>
-          </div>
+          {/* </div> */}
           {/* <Footer /> */}
-        </div>
+        {/* </div> */}
       </Router>
     </ApolloProvider>
   );

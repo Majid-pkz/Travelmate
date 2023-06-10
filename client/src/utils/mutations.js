@@ -14,7 +14,7 @@ export const LOGIN_USER = gql`
     
   }
 `;
-export const CREAT_USER = gql`
+export const CREATE_USER = gql`
   mutation createUser(
     $firstname: String!
     $lastname: String!
@@ -30,11 +30,19 @@ export const CREAT_USER = gql`
       token
       user {
         _id
-        username
+        firstname
       }
     }
   }
 `;
+
+// createUser(firstname: $firstname, lastname: $lastname, email: $email, password: $password) {
+//   user {
+//     firstname
+//   }
+//   token
+// }
+// }
 
 export const CREATE_PROFILE = gql`
 mutation CreateProfile(

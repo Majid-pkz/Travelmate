@@ -1,0 +1,19 @@
+.container-style{
+    width: 100%;
+    position: relative;
+}
+.carousel{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+.carousel span{
+    width: 10px;
+    height: 10px;
+    background-color: var(--black);
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
