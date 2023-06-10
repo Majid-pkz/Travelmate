@@ -33,7 +33,8 @@ const Header = () => {
             <ul>
               <li>
                 <NavLink onClick={handleShowNavbar} to="/me">
-                  {Auth.getProfile().data.username}'s profile
+                  {/* {Auth.getProfile().data.firstname}'s profile */}
+                  Profile
                 </NavLink>
               </li>
               <li>

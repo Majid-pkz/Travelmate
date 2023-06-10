@@ -6,7 +6,8 @@ import Auth from '../utils/auth';
 
 const Signup = () => {
     const [formState, setFormState] = useState({
-        name: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
       });
@@ -25,7 +26,8 @@ const Signup = () => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
+    console.log("Whats name???", formState.name)
 
     try {
       const { data } = await createUser({
@@ -52,8 +54,16 @@ const Signup = () => {
               <form onSubmit={handleFormSubmit}>
                 <input
                   className="form-input"
-                  placeholder="Your username"
-                  name="name"
+                  placeholder="Your First Name"
+                  name="firstname"
+                  type="text"
+                  value={formState.name}
+                  onChange={handleChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="Your Last Name"
+                  name="lastname"
                   type="text"
                   value={formState.name}
                   onChange={handleChange}
