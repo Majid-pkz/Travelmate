@@ -15,5 +15,8 @@
   "devDependencies": {
     "concurrently": "^5.3.0",
     "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "@mui/icons-material": "^5.11.16"
   }
 }
