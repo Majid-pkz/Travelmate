@@ -4,10 +4,11 @@ import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@a
 
 import Home from './pages/Home/Home';
 import Signup from './pages/Signup';
-import Mdb from './pages/MDB'
+import FileUpload from './pages/FileUpload'
 import { setContext } from '@apollo/client/link/context';
 import Login from './pages/Login';
 import RecipeReviewCard from './pages/TestCard'
+import Trip from './pages/Trip'
 
 import Header from './components/Header/Header';
 
@@ -52,42 +53,27 @@ function App() {
               />
               <Route
                 path="/trips"
-                element={<Home />}
+                element={<Trip />}
               />
+              
+              {/* <Route
+                path="/new-trip"
+                element={< />}
+              /> */}
               <Route
                 path="/single"
                 element={<RecipeReviewCard />}
               />
 
               <Route
-                path="/mdb"
-                element={<Mdb />}
+                path="/upload"
+                element={<FileUpload />}
               />
 
 
 
 
-              {/* <Route 
-                path="/"
-                element={<Home />}
-              />
-              <Route 
-                path="/login" 
-                element={<Login />}
-              />
-              
-              <Route 
-                path="/me" 
-                element={<RecipeReviewCard />}
-              />
-              <Route 
-                path="/profiles/:username" 
-                element={<Profile />}
-              />
-              <Route 
-                path="/thoughts/:thoughtId" 
-                element={<SingleThought />}
-              /> */}
+           
             </Routes>
           {/* </div> */}
           {/* <Footer /> */}
