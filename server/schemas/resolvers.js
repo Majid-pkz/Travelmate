@@ -171,14 +171,15 @@ const resolvers = {
      console.log('--------------trip._id:  ',trip._id)
      console.log('--------------trip.id:  ',trip.id)
      console.log('--------params.creator:   ',params.creator)
+     console.log('This is context.user when creating a trip',context.user)
      await Profile.findOneAndUpdate(
-        { profileUser: params.creator },
+        { profileUser: context.user._id},
         { $addToSet: { createdTrips: trip.id } },
         {new:true}
       );
       // trip =  await Trip.findById(trip._id).populate('creator').populate('tripType')
       trip =  await trip.populate('creator tripType travelmates')
-      console.log(trip)
+      
       return trip;
 
      }
