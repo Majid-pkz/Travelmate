@@ -97,3 +97,33 @@ mutation CreateProfile(
     }
   
 `;
+export const CREATE_TRIP = gql`
+  mutation createTrip(
+    $creator: ID!
+    $title: String!
+    $description: String!
+    $departureLocation: String!
+    $destination: String!
+    $startDate: String
+    $endDate: String
+  ) {
+    createTrip(
+      creator: $creator
+      title: $title
+      description: $description
+      departureLocation: $departureLocation
+      destination: $destination
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      
+      title
+      travelmates {
+        email
+      }
+      tripType {
+        tripType
+      }
+    }
+  }
+`;
