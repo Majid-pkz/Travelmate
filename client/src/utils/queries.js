@@ -41,3 +41,41 @@ export const QUERY_USERS = gql`
     }
   }
 `;
+
+export const SEARCH_TRIPS = gql`
+query SearchTrips($departureLocation: String) {
+  searchTrips(departureLocation: $departureLocation) {
+    _id
+    creator {
+      _id
+      firstname
+      lastname
+      email
+      password
+      isAdmin
+    }
+    title
+    description
+    departureLocation
+    destination
+    startDate
+    endDate
+    tripType {
+      _id
+      tripType
+    }
+    meetupPoint
+    approvedTrip
+    published
+    image
+    travelmates {
+      _id
+      firstname
+      lastname
+      email
+      password
+      isAdmin
+    }
+  }
+}
+`;

@@ -134,7 +134,7 @@ const ExpandMore = styled((props) => {
 
 
 
-const Home = () => {
+const Trips = () => {
 
     const isLoggedIn = AuthService.loggedIn()
   const { loading, error, data } = useQuery(QUERY_TRIPS);
@@ -167,4 +167,4 @@ const Home = () => {
         return null
 };
 
-export default Home;
+export default Trips;

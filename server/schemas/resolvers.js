@@ -75,6 +75,10 @@ const resolvers = {
       return trips;
     },
 
+    searchTrips: async (parent, {departureLocation}) => {
+      const trips = await Trip.find({departureLocation}).populate('creator').populate('tripType').populate('travelmates');
+      return trips;
+    },
 
     // Define a resolver to retrieve single trip
     trip: async (parent, args) => {
@@ -89,6 +93,8 @@ const resolvers = {
       // Use the parameter to find the matching tripType in the collection
       return await TripType.findById(args.id);
     },
+
+
     interests:  async () => {
       const inter = await Interest.find({})     
       return inter;

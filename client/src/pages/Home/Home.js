@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Slider from '../../components/Slider/Slider';
 import { Container, TextField } from "@mui/material";
+import SearchBar from '../../components/SearchBar/SearchBar';
 import Auth from '../../utils/auth';
 import './Home.css'
 
 const Home = () => {
+
+
     return (
         <div className="home-container">
             <Slider />
@@ -14,10 +17,11 @@ const Home = () => {
                 <hr className="my-4" />
                 {Auth.loggedIn() ? (
                     <>
-                <p>Search below to start your journey</p>
-                <Container maxWidth="md" sx={{ mt: 1 }}>
+                <p>Search a departure location to start your journey</p>
+                <SearchBar />
+                {/* <Container maxWidth="md" sx={{ mt: 1 }}>
                     <TextField type="search" id="filled-basic" label="Search" variant="filled" sx={{ width: 750 }} style={{color:'white'}} />
-                </Container>
+                </Container> */}
                 </>
                 ) : (
                     <p> <Link to="/login"> Login </Link> to browse trips</p>
