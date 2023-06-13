@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import RecipeReviewCard from './pages/TestCard'
 
 import Header from './components/Header/Header';
+import LoginTest from './pages/LoginTest';
 
 const client = new ApolloClient({
   uri: '/graphql',
@@ -34,13 +35,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        {/* <div className="flex-column justify-flex-start min-100-vh"> */}
           <Header />
-          {/* <div className="container"> */}
             <Routes>
               <Route
                 path="/login"
-                element={<Login />}
+                element={<LoginTest />}
               />
               <Route 
                 path="/signup" 
