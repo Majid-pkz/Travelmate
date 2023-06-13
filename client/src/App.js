@@ -11,6 +11,7 @@ import RecipeReviewCard from './pages/TestCard'
 import Trip from './pages/Trip'
 import StartTrip from './pages/StartTrip'
 import Header from './components/Header/Header';
+import LoginTest from './pages/LoginTest';
 
 
 // Construct our main GraphQL API endpoint
@@ -41,13 +42,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        {/* <div className="flex-column justify-flex-start min-100-vh"> */}
           <Header />
-          {/* <div className="container"> */}
             <Routes>
               <Route
                 path="/login"
-                element={<Login />}
+                element={<LoginTest />}
               />
               <Route 
                 path="/signup" 

@@ -20,7 +20,7 @@ const Home = () => {
                 </Container>
                 </>
                 ) : (
-                    <p>Login to browse trips</p>
+                    <p> <Link to="/login"> Login </Link> to browse trips</p>
                     
                 )}
             </div>
