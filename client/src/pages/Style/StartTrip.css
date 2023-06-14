@@ -1,0 +1,26 @@
+.custom-datepicker {
+   
+    padding: 15px;
+    border: 1px solid #333333  ;
+    border-radius: 8px;
+  
+    width: 390px;
+  }
+  .datepicker-container {
+    display: flex;
+    flex-direction: row; /* Display in a row */
+   
+    margin-left: -84px; 
+    margin-top: 20px;
+    margin-bottom: 40px;
+   
+  }
+ 
+.close-icon {
+  position: absolute;
+  right: 20px;
+  top: 10%;
+  transform: translateY(-40%);
+  cursor: pointer;
+ 
+}
