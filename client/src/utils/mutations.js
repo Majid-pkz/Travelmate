@@ -45,7 +45,7 @@ export const CREATE_USER = gql`
 // }
 
 export const CREATE_PROFILE = gql`
-mutation CreateProfile(
+mutation createProfile(
     $profileUser: ID!
     $location: String
     $joinedDate: String

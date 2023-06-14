@@ -15,6 +15,9 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import LoginTest from './pages/LoginTest';
 
+import Profile from './pages/creatProfile'
+import PersonalProfile from './pages/displayProfile'
+import GroupExample from './pages/ProfileCards'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -76,6 +79,20 @@ function App() {
                 path="/upload"
                 element={<FileUpload />}
               />
+
+              <Route
+                path="/profile"
+                element={<Profile />}
+              />
+              <Route
+                path="/display"
+                element={<PersonalProfile />}
+              />
+               <Route
+                path="/all-profiles"
+                element={<GroupExample />}
+              />
+
 
 
 

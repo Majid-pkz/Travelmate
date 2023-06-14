@@ -5,6 +5,8 @@ const { authMiddleware } = require('./utils/auth');
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+const imageRoutes = require('./schemas/image-routes');
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -16,6 +18,11 @@ const server = new ApolloServer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+
+
+// const __dirname = path.resolve();
+app.use('/images', express.static(path.join(__dirname, '/images')));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -31,6 +38,8 @@ const startApolloServer = async () => {
   
   await server.start();
   server.applyMiddleware({ app });
+
+  app.use('/api/images', imageRoutes);
   
   db.once('open', () => {
     app.listen(PORT, () => {
