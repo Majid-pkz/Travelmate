@@ -32,6 +32,11 @@ const Header = () => {
           {Auth.loggedIn() ? (
             <ul>
               <li>
+                <NavLink className="home" onClick={handleShowNavbar} to="/">
+                  Home
+                </NavLink>
+              </li>
+              <li>
                 <NavLink onClick={handleShowNavbar} to="/me">
                   {/* {Auth.getProfile().data.firstname}'s profile */}
                   Profile
@@ -43,9 +48,9 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-                <button className="btn btn-lg btn-light m-2" onClick={logout}>
+                <NavLink onClick={logout}>
                   Logout
-                </button>
+                </NavLink>
               </li>
             </ul>
           ) : (

@@ -127,3 +127,41 @@ export const CREATE_TRIP = gql`
     }
   }
 `;
+
+export const JOIN_TRIP = gql`
+mutation joinTrip($joinTripId: ID!, $userJoining: ID!) {
+  joinTrip(id: $joinTripId, userJoining: $userJoining) {
+    _id
+    creator {
+      _id
+      firstname
+      lastname
+      email
+      password
+      isAdmin
+    }
+    title
+    description
+    departureLocation
+    destination
+    startDate
+    endDate
+    tripType {
+      _id
+      tripType
+    }
+    meetupPoint
+    approvedTrip
+    published
+    image
+    travelmates {
+      _id
+      firstname
+      lastname
+      email
+      password
+      isAdmin
+    }
+  }
+}
+`;

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
+
 import Home from './pages/Home/Home';
 import Signup from './pages/Signup';
 import FileUpload from './pages/FileUpload'
@@ -11,6 +12,7 @@ import RecipeReviewCard from './pages/TestCard'
 import Trip from './pages/Trip'
 import StartTrip from './pages/StartTrip'
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import LoginTest from './pages/LoginTest';
 
 
@@ -81,7 +83,7 @@ function App() {
            
             </Routes>
           {/* </div> */}
-          {/* <Footer /> */}
+          <Footer />
         {/* </div> */}
       </Router>
     </ApolloProvider>

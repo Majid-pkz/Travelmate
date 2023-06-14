@@ -6,7 +6,8 @@
     display:flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
+    background-color: var(--beige);
 }
 .carousel span{
     width: 10px;

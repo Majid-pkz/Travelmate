@@ -75,8 +75,26 @@ const resolvers = {
       return trips;
     },
 
-    searchTrips: async (parent, {departureLocation}) => {
-      const trips = await Trip.find({departureLocation}).populate('creator').populate('tripType').populate('travelmates');
+    // searchTrips: async (parent, {departureLocation}) => {
+    //   const trips = await Trip.find({departureLocation}).populate('creator').populate('tripType').populate('travelmates');
+    //   return trips;
+    // },
+
+    // searchTrips: async (parent, { departureLocation }) => {
+    //   const trips = await Trip.find({ departureLocation: { $regex: new RegExp(`^${departureLocation}$`, 'i') } })
+    //     .populate('creator')
+    //     .populate('tripType')
+    //     .populate('travelmates');
+    //   return trips;
+    // },
+    searchTrips: async (parent, { departureLocation }) => {
+      const searchQuery = new RegExp(departureLocation, 'i'); // 'i' flag for case-insensitive search
+    
+      const trips = await Trip.find({ departureLocation: { $regex: searchQuery } })
+        .populate('creator')
+        .populate('tripType')
+        .populate('travelmates');
+    
       return trips;
     },
 
@@ -207,33 +225,6 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    // note the following version looks the same as above in studio gql but does not update.. why??
-    // maybe params.id not params._id
-
-    // updateUser: async (parent, params) => {
-    //   // Find and update
-    //   console.log('--------------------------------------------this is param:',params)
-    //   console.log('-----------------------this is params.id:',params.id)
-    //   console.log('--------------------------this is params._id:',params._id)
-    //   return await User.findOneAndUpdate(
-    //     { _id: params.id },
-    //     params,
-    //     // Return the newly updated object instead of the original
-    //     { new: true }
-    //   );
-    // },
-    
-    // updateProfile: async (parent, { id, location, gender,age, bio,
-    //   interests,image,verified,subscribed}) => {
-    //   // Find and update
-    //   return await Profile.findOneAndUpdate(
-    //     { _id: id },
-    //     {location, gender,age, bio,
-    //       interests,image,verified,subscribed },
-    //     // Return the newly updated object instead of the original
-    //     { new: true }
-    //   );
-    // },
  
 
     updateProfile:async (parent, params, context) => {
