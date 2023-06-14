@@ -51,13 +51,26 @@ const ExpandMore = styled((props) => {
 //   );
 // };
 
+
  const  RecipeReviewCard = ({ trip }) =>{
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-
+    function convertUnixTimestampToDateString(timestamp) {
+      const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+    
+      // Get day, month, and year components
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based, so add 1
+      const year = date.getFullYear();
+    
+      // Format the components as a string in "dd-MM-yyyy" format
+      const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+    
+      return formattedDate;
+    }
    
    
   return (
@@ -81,7 +94,7 @@ const ExpandMore = styled((props) => {
         {trip.title}
         
       </Typography>}
-        subheader="September -Novemeber"
+        subheader= {convertUnixTimestampToDateString(trip.endDate)}
       />
       <CardMedia
         component="img"

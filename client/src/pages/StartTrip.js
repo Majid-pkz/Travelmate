@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { CREATE_TRIP } from '../utils/mutations';
-import Auth from '../utils/auth';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { CREATE_TRIP } from "../utils/mutations";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./Style/StartTrip.css";
+import Auth from "../utils/auth";
 
 const StartTrip = () => {
-    const [formState, setFormState] = useState({
-        creator: '',
-        title: '',
-        description: '',
-        departureLocation: '',
-        destination: '',
-        startDate: '',
-        endDate:'',
-      });
-      const [createTrip, { error, data }] = useMutation(CREATE_TRIP);
+  const token = localStorage.getItem('id_token');
+    const userData = Auth.getProfile(token)
+  const [formState, setFormState] = useState({
+    creator: userData.data._id ,
+    title: "",
+    description: "",
+    departureLocation: "",
+    destination: "",
+    startDate: "",
+    endDate: "",
+  });
 
-      // update state based on form input changes
+  const [createTrip, { error, data }] = useMutation(CREATE_TRIP);
+
+  // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -26,11 +33,29 @@ const StartTrip = () => {
     });
   };
 
+  // handle start date change
+  const handleStartDateChange = (date) => {
+    setFormState({
+      ...formState,
+      startDate: date,
+    });
+  };
+
+  // handle end date change
+  const handleEndDateChange = (date) => {
+    setFormState({
+      ...formState,
+      endDate: date,
+    });
+  };
+
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-     console.log(formState);
-    console.log("Whats name???", formState.name)
+    // console.log(formState.startDate.toISOString().substring(0, 10));
+    console.log('userid comes from auth.getProfile',userData.data._id)
+    console.log('userData: ----------------',userData)
+    console.log('formState.creator: ----------------',formState.creator)
 
     try {
       const { data } = await createTrip({
@@ -50,70 +75,73 @@ const StartTrip = () => {
           <div className="card-body">
             {data ? (
               <p>
-                Success! You may now head{' '}
+                Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                  <input
-        className="form-input"
-        placeholder="Creator"
-        name="creator"
-        type="text"
-        value={formState.creator}
-        onChange={handleChange}
-      />
-      <input
-        className="form-input"
-        placeholder="Title"
-        name="title"
-        type="text"
-        value={formState.title}
-        onChange={handleChange}
-      />
-      <input
-        className="form-input"
-        placeholder="Description"
-        name="description"
-        type="text"
-        value={formState.description}
-        onChange={handleChange}
-      />
-      <input
-        className="form-input"
-        placeholder="Departure Location"
-        name="departureLocation"
-        type="text"
-        value={formState.departureLocation}
-        onChange={handleChange}
-      />
-      <input
-        className="form-input"
-        placeholder="Destination"
-        name="destination"
-        type="text"
-        value={formState.destination}
-        onChange={handleChange}
-      />
-      <input
-        className="form-input"
-        placeholder="Start Date"
-        name="startDate"
-        type="text"
-        value={formState.startDate}
-        onChange={handleChange}
-      />
-      <input
-        className="form-input"
-        placeholder="End Date"
-        name="endDate"
-        type="text"
-        value={formState.endDate}
-        onChange={handleChange}
-      />
+               
+                <input
+                  className="form-input"
+                  placeholder="Title"
+                  name="title"
+                  type="text"
+                  value={formState.title}
+                  onChange={handleChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="Description"
+                  name="description"
+                  type="text"
+                  value={formState.description}
+                  onChange={handleChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="Departure Location"
+                  name="departureLocation"
+                  type="text"
+                  value={formState.departureLocation}
+                  onChange={handleChange}
+                />
+                <input
+                  className="form-input"
+                  placeholder="Destination"
+                  name="destination"
+                  type="text"
+                  value={formState.destination}
+                  onChange={handleChange}
+                />
+                <div className="datepicker-container " >
+                  <DatePicker
+                    className="custom-datepicker close-icon"
+                    selected={formState.startDate}
+                    onChange={handleStartDateChange}
+                    dateFormat="dd/MM/yyyy"
+                    minDate={new Date()}
+                    isClearable
+                    placeholderText="Start Date"
+                  />
+                   <DatePicker
+                    className="custom-datepicker endDatepicker close-icon"
+                    selected={formState.endDate}
+                    onChange={handleEndDateChange}
+                    dateFormat="dd/MM/yyyy"
+                    minDate={formState.startDate}
+                    isClearable
+                    placeholderText="End Date"
+                  />
+                </div>
+
+                <div>
+                 
+                </div>
+
+       
                 <button
                   className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   type="submit"
                 >
                   Submit
