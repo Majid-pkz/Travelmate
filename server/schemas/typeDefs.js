@@ -117,7 +117,8 @@ const typeDefs = gql`
     interests:[Interest]
     # Define a query with an ID parameter to return a single of that  object
 
-    trip(id: ID!): Trip    
+    trip(id: ID!): Trip   
+    searchTrips(departureLocation: String): [Trip] 
     user(id: ID!): User    
     tripType(id: ID!): TripType
     profile(id: ID!): Profile

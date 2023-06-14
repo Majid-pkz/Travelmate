@@ -5,15 +5,14 @@ import { CREATE_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const Signup = () => {
-    const [formState, setFormState] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-      });
-      const [createUser, { error, data }] = useMutation(CREATE_USER);
+  const [formState, setFormState] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+  });
+  const [createUser, { error, data }] = useMutation(CREATE_USER);
 
-      // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -23,11 +22,8 @@ const Signup = () => {
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // console.log(formState);
-    console.log("Whats name???", formState.name)
 
     try {
       const { data } = await createUser({
@@ -39,59 +35,82 @@ const Signup = () => {
       console.error(e);
     }
   };
+
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-sm-6">
+          <div className="d-flex flex-row justify-content-start ps-5 pt-5">
+            <i className="fas fa-crow fa-3x me-3" style={{ color: '#709085' }}></i>
+          </div>
+
+          <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-4">
+            <h3 className="fw-normal mb-3 ps-5 pb-3 text-center" style={{ letterSpacing: '1px' }}>Sign Up</h3>
+
+            <form onSubmit={handleFormSubmit}>
+              <div className="mb-4 mx-5">
+                <label htmlFor="firstname" className="form-label">First Name</label>
+                <input
+                  className="form-control"
+                  id="firstname"
+                  type="text"
+                  name="firstname"
+                  value={formState.firstname}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-4 mx-5">
+                <label htmlFor="lastname" className="form-label">Last Name</label>
+                <input
+                  className="form-control"
+                  id="lastname"
+                  type="text"
+                  name="lastname"
+                  value={formState.lastname}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-4 mx-5">
+                <label htmlFor="email" className="form-label">Email address</label>
+                <input
+                  className="form-control"
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formState.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-4 mx-5">
+                <label htmlFor="password" className="form-label">Password</label>
+                <input
+                  className="form-control"
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={formState.password}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <button className="btn btn-primary mb-4 px-5 mx-5" type="submit">Submit</button>
+            </form>
+
             {data ? (
               <p>
                 Success! You may now head{' '}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your First Name"
-                  name="firstname"
-                  type="text"
-                  value={formState.firstname}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Your Last Name"
-                  name="lastname"
-                  type="text"
-                  value={formState.lastname}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
+              <p className="ms-2 text-center">
+                Already have an account?{' '}
+                <Link to="/login" className="link-info text-center" style={{ color: 'var(--orange)' }}>
+                  Log in here
+                </Link>
+              </p>
             )}
 
             {error && (
@@ -101,8 +120,12 @@ const Signup = () => {
             )}
           </div>
         </div>
+
+        <div className="col-sm-6 d-none d-sm-block px-0">
+          {/* Your image or any other content */}
+        </div>
       </div>
-    </main>
+    </div>
   );
 };
 

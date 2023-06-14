@@ -39,7 +39,7 @@ const LoginTest = (props) => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ backgroundColor: 'var(--beige)' }}>
       <div className="row">
         <div className="col-sm-6">
           <div className="d-flex flex-row justify-content-start ps-5 pt-5">

@@ -39,7 +39,7 @@ const Slider = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        height: 'calc(100vh - 180px)',
+        height: 'calc(100vh - 193px)',
         transition: 'background-image 0.3s ease',
     }
 
