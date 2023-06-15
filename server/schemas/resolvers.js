@@ -169,7 +169,9 @@ const resolvers = {
     },
 
     createProfile: async(parent,params,context)=>{
+      console.log('This is context.user when creating a profile');
       if (context.user) {
+      
       return (await Profile.create(params)).populate('profileUser interests')
       }
       throw new AuthenticationError('You need to be logged in!');

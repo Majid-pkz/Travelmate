@@ -68,7 +68,7 @@ const typeDefs = gql`
       isAdmin: Boolean): Auth
 
     createProfile(profileUser:ID!, location: String, joinedDate: String, gender: String,
-        age: Int, bio: String, interests:ID!,image: String, verified: Boolean,
+        age: Int, bio: String, interests:ID,image: String, verified: Boolean,
         subscribed: Boolean, createdTrips:ID, tripCount: Int): Profile
 
     createTrip(creator: ID!, title: String!, description: String!,

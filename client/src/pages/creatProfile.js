@@ -3,17 +3,21 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_PROFILE } from '../utils/mutations';
 import Auth from '../utils/auth';
-import  Upload from '../components/Upload'
-const Profile = () => {
-    const [formState, setFormState] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
-        password: '',
-      });
-      const [createProfile, { error, data }] = useMutation(CREATE_PROFILE);
+import Upload from '../components/Upload';
 
-      // update state based on form input changes
+const Profile = () => {
+  const token = localStorage.getItem('id_token');
+  const userData = Auth.getProfile(token);
+  const [formState, setFormState] = useState({
+    profileUser: userData.data._id,
+    location: null,
+    gender: null,
+    age: null,
+    bio: null
+  });
+  const [createProfile, { error, data }] = useMutation(CREATE_PROFILE);
+
+  // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -26,65 +30,77 @@ const Profile = () => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    
-
+    console.log("This is user ID", userData.data._id);
     try {
+      console.log("This is form state", formState)
       const { data } = await createProfile({
         variables: { ...formState },
       });
-
-   
+      console.log("This is data", data)
+      window.location.href = "/my-profile";
+      // Auth.login(data.createProfile.token);
     } catch (e) {
       console.error(e);
     }
   };
+
   return (
     <main className="flex-row justify-center mb-4">
       <div className="col-12 col-lg-10">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Creat your Profile</h4>
+          <h4 className="card-header bg-dark text-light p-2">Create your Profile</h4>
           <div className="card-body">
-          <Upload />
+            <Upload />
 
-          
             {data ? (
               <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                Success! You may now head <Link to="/">back to the homepage.</Link>
               </p>
-             
             ) : (
               <form onSubmit={handleFormSubmit}>
+                
                 <input
                   className="form-input"
-                  placeholder="userId"
+                  placeholder="Location"
                   name="location"
                   type="text"
-                  value={formState.name}
+                  value={formState.location}
                   onChange={handleChange}
                 />
+              
+                <select
+                  className="form-select"
+                  name="gender"
+                  value={formState.gender}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
                 <input
                   className="form-input"
-                  placeholder="gender"
+                  placeholder="Age"
                   name="age"
-                  type="number"
-                  value={formState.name}
+                  type="text"
+                  value={formState.age}
                   onChange={handleChange}
                 />
                 <input
                   className="form-input"
-                  placeholder="about me"
+                  placeholder="Bio"
                   name="bio"
                   type="text"
-                  value={formState.email}
+                  value={formState.bio}
                   onChange={handleChange}
                 />
                 <input
                   className="form-input"
-                  placeholder="image url"
-                  name="image"
-                  type="String"
-                  value={formState.password}
+                  placeholder="Interests"
+                  name="interests"
+                  
+                  value={formState.interests}
                   onChange={handleChange}
                 />
                 <button
@@ -98,9 +114,7 @@ const Profile = () => {
             )}
 
             {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
+              <div className="my-3 p-3 bg-danger text-white">{error.message}</div>
             )}
           </div>
         </div>

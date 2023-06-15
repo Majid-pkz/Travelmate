@@ -81,7 +81,7 @@ function App() {
               />
 
               <Route
-                path="/profile"
+                path="/me"
                 element={<Profile />}
               />
               <Route

@@ -45,58 +45,35 @@ export const CREATE_USER = gql`
 // }
 
 export const CREATE_PROFILE = gql`
-mutation createProfile(
-    $profileUser: ID!
-    $location: String
-    $joinedDate: String
-    $gender: String
-    $age: Int
-    $bio: String
-    $interests: ID!
-    $image: String
-    $verified: Boolean
-    $subscribed: Boolean
-    $createdTrips: ID
-    $tripCount: Int
-  ) {
-    createProfile(
-      profileUser: $profileUser
-      location: $location
-      joinedDate: $joinedDate
-      gender: $gender
-      age: $age
-      bio: $bio
-      interests: $interests
-      image: $image
-      verified: $verified
-      subscribed: $subscribed
-      createdTrips: $createdTrips
-      tripCount: $tripCount
-    ) {
-        _id
-        profileUser {
-          firstname
-          _id
-        }
-        age
-        bio
-        createdTrips {
-          _id
-          creator {
-            _id
-            firstname
-          }
-        }
-        interests {
-          _id
-          label
-        }
-        tripCount
-        location
-      }
+mutation createProfile($profileUser: ID!, $location: String, $joinedDate: String, $gender: String, $age: Int, $bio: String, $interests: ID, $image: String, $verified: Boolean, $subscribed: Boolean, $createdTrips: ID, $tripCount: Int) {
+  createProfile(profileUser: $profileUser, location: $location, joinedDate: $joinedDate, gender: $gender, age: $age, bio: $bio, interests: $interests, image: $image, verified: $verified, subscribed: $subscribed, createdTrips: $createdTrips, tripCount: $tripCount) {
+    _id
+    profileUser {
+      _id
+      firstname
+      lastname
+      email
     }
-  
+    location
+    joinedDate
+    gender
+    age
+    bio
+    interests {
+      _id
+      label
+    }
+    image
+    verified
+    subscribed
+    createdTrips {
+      title
+    }
+    tripCount
+  }
+}
 `;
+
 export const CREATE_TRIP = gql`
   mutation createTrip(
     $creator: ID!
