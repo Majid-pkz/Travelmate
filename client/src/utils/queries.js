@@ -54,29 +54,32 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_PROFILE = gql`
-query profile {
-  _id
-  age
-  bio
-  createdTrips {
-    title
-    travelmates {
-      firstname
-    }
-  }
-  gender
-  image
-  interests {
-    label
-  }
-  profileUser {
+query searchProfile($profileUser: ID!) {
+  profile(id: $profileId) {
     _id
-    firstname
+    profileUser {
+      _id
+      firstname
+      lastname
+      email
+    }
+    location
+    joinedDate
+    gender
+    age
+    bio
+    interests {
+      _id
+      label
+    }
+    image
+    verified
+    subscribed
+    createdTrips {
+      title
+    }
+    tripCount
   }
-  joinedDate
-  location
-  tripCount
-  verified
 }
 `;
 export const QUERY_PROFILES = gql`
