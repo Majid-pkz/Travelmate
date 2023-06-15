@@ -1,85 +1,103 @@
 import React from 'react';
-import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useQuery } from '@apollo/client';
+import { QUERY_PROFILE } from '../utils/queries';
+import Auth from '../utils/auth';
 
-export default function PersonalProfile() {
-    const [user, setUser] = useState([]);
+const PersonalProfile = () => {
+  const token = localStorage.getItem('id_token');
+  const userData = Auth.getProfile(token);
+  const { loading, error, data } = useQuery(QUERY_PROFILE, {
+    variables: { profileId: userData.data._id },
+  });
+  const [user, setUser] = useState([]);
 
-    useEffect(() => {
-        const token = localStorage.getItem('id_token');
-        axios.get('/api/images/profile', {
-            headers: {
-               
-                authorization: token ? `Bearer ${token}` : '',
-              }
-        }) // Replace '/api/images' with your actual API endpoint
-          .then(response => {
-            setUser(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching images:', error);
-          });
-      }, []);
-      
-   
-      console.log(user)
+  useEffect(() => {
+    const token = localStorage.getItem('id_token');
+    axios.get('/api/images/profile', {
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
+      }
+    })
+      .then(response => {
+        setUser(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching images:', error);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const { profileUser, age, bio, createdTrips, gender, image, interests, joinedDate, location, tripCount, verified } = data.profile;
 
   return (
-    <section className="vh-100" >
-      <MDBContainer fluid >
-        <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol lg="10" className="mb-4 mb-lg-0">
-            <MDBCard className="mb-3" style={{ borderRadius: '.8rem' }}>
-              <MDBRow className="g-0">
-                <MDBCol md="4" className="gradient-custom text-center text-white"
-                  style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
-                  <MDBCardImage src={user.image}
-                    alt="Avatar" className="my-5" style={{ width: '150px' }} fluid />
-                  <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
-                  <MDBCardText>Web Designer</MDBCardText>
-                  <MDBIcon far icon="edit mb-5" />
-                </MDBCol>
-                <MDBCol md="8">
-                  <MDBCardBody className="p-4">
-                    <MDBTypography tag="h6">Information</MDBTypography>
+    <section className="vh-100">
+      <div className="container-fluid">
+        <div className="row justify-content-center align-items-center h-100">
+          <div className="col-lg-10 mb-4 mb-lg-0">
+            <div className="card mb-3" style={{ borderRadius: '.8rem' }}>
+              <div className="row g-0">
+                <div className="col-md-4 gradient-custom text-center text-white" style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
+                  <img src={image} alt="Avatar" className="my-5" style={{ width: '150px' }} />
+                  <h5 className="card-title">{profileUser.firstname}</h5>
+                  <p className="card-text">Web Designer</p>
+                  <i className="far fa-edit mb-5"></i>
+                </div>
+                <div className="col-md-8">
+                  <div className="card-body p-4">
+                    <h6 className="card-title">Information</h6>
                     <hr className="mt-0 mb-4" />
-                    <MDBRow className="pt-1">
-                      <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Email</MDBTypography>
-                        <MDBCardText className="text-muted">info@example.com</MDBCardText>
-                      </MDBCol>
-                      <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Phone</MDBTypography>
-                        <MDBCardText className="text-muted">123 456 789</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
+                    <div className="row pt-1">
+                      <div className="col-6 mb-3">
+                        <h6 className="card-title">Age</h6>
+                        <p className="text-muted">{age}</p>
+                      </div>
+                      <div className="col-6 mb-3">
+                        <h6 className="card-title">Gender</h6>
+                        <p className="text-muted">{gender}</p>
+                      </div>
+                    </div>
 
-                    <MDBTypography tag="h6">Information</MDBTypography>
+                    <h6 className="card-title">Bio</h6>
                     <hr className="mt-0 mb-4" />
-                    <MDBRow className="pt-1">
-                      <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Email</MDBTypography>
-                        <MDBCardText className="text-muted">info@example.com</MDBCardText>
-                      </MDBCol>
-                      <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Phone</MDBTypography>
-                        <MDBCardText className="text-muted">123 456 789</MDBCardText>
-                      </MDBCol>
-                    </MDBRow>
+                    <p className="card-text">{bio}</p>
+
+                    <h6 className="card-title">Interests</h6>
+                    <hr className="mt-0 mb-4" />
+                    <p className="card-text">{interests.map((interest) => interest.label).join(', ')}</p>
+
+                    <h6 className="card-title">Created Trips</h6>
+                    <hr className="mt-0 mb-4" />
+                    {createdTrips.map((trip) => (
+                      <div key={trip.title}>
+                        <h6 className="card-title">{trip.title}</h6>
+                        <p className="card-text">Travelmate: {trip.travelmates[0].firstname}</p>
+                      </div>
+                    ))}
 
                     <div className="d-flex justify-content-start">
-                      <a href="#!"><MDBIcon fab icon="facebook me-3" size="lg" /></a>
-                      <a href="#!"><MDBIcon fab icon="twitter me-3" size="lg" /></a>
-                      <a href="#!"><MDBIcon fab icon="instagram me-3" size="lg" /></a>
+                      <a href="#!"><i className="fab fa-facebook me-3 fa-lg"></i></a>
+                      <a href="#!"><i className="fab fa-twitter me-3 fa-lg"></i></a>
+                      <a href="#!"><i className="fab fa-instagram me-3 fa-lg"></i></a>
                     </div>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
-}
+};
+
+export default PersonalProfile;
+
