@@ -9,7 +9,7 @@ const PersonalProfile = () => {
   const token = localStorage.getItem('id_token');
   const userData = Auth.getProfile(token);
   const { loading, error, data } = useQuery(QUERY_PROFILE, {
-    variables: { profileId: userData.data._id },
+    variables: { profileUser: userData.data._id },
   });
   const [user, setUser] = useState([]);
 
@@ -79,7 +79,7 @@ const PersonalProfile = () => {
                     {createdTrips.map((trip) => (
                       <div key={trip.title}>
                         <h6 className="card-title">{trip.title}</h6>
-                        <p className="card-text">Travelmate: {trip.travelmates[0].firstname}</p>
+                        <p className="card-text">Travelmate: {trip?.travelmates && trip.travelmates[0].firstname}</p>
                       </div>
                     ))}
 

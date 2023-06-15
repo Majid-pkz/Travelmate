@@ -41,19 +41,19 @@ const RecipeReviewCard = ({ trip }) => {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-    function convertUnixTimestampToDateString(timestamp) {
-      const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+    // function convertUnixTimestampToDateString(timestamp) {
+    //   const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
     
-      // Get day, month, and year components
-      const day = date.getDate();
-      const month = date.getMonth() + 1; // Months are zero-based, so add 1
-      const year = date.getFullYear();
+    //   // Get day, month, and year components
+    //   const day = date.getDate();
+    //   const month = date.getMonth() + 1; // Months are zero-based, so add 1
+    //   const year = date.getFullYear();
     
-      // Format the components as a string in "dd-MM-yyyy" format
-      const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+    //   // Format the components as a string in "dd-MM-yyyy" format
+    //   const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
     
-      return formattedDate;
-    }
+    //   return formattedDate;
+    // }
    
    
   return (
@@ -75,7 +75,7 @@ const RecipeReviewCard = ({ trip }) => {
         {trip.title}
         
       </Typography>}
-        subheader= {convertUnixTimestampToDateString(trip.endDate)}
+        subheader= {(trip.endDate)}
       />
       <CardMedia component="img" height="194" image={oceanView} alt="Paella dish" />
       <CardContent>

@@ -59,7 +59,7 @@ const resolvers = {
     profile: async (parent, args) => {
       // Use the parameter to find the matching user in the collection
       console.log(args)
-     let profile = await Profile.findById(args.id).populate('profileUser').populate('interests').
+     let profile = await Profile.findOne({profileUser: args.id}).populate('profileUser').populate('interests').
      populate('createdTrips');
     
      if(!profile){

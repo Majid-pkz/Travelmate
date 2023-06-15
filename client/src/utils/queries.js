@@ -54,8 +54,8 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_PROFILE = gql`
-query searchProfile($profileUser: ID!) {
-  profile(id: $profileId) {
+query profile($profileUser: ID!) {
+  profile(id: $profileUser) {
     _id
     profileUser {
       _id
