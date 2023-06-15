@@ -34,7 +34,7 @@ const Profile = () => {
     try {
       console.log("This is form state", formState)
       const { data } = await createProfile({
-        variables: { ...formState },
+        variables: { ...formState, age: formState.age?parseInt(formState.age):null },
       });
       console.log("This is data", data)
       window.location.href = "/my-profile";
@@ -64,14 +64,14 @@ const Profile = () => {
                   placeholder="Location"
                   name="location"
                   type="text"
-                  value={formState.location}
+                  value={formState.location|| ""}
                   onChange={handleChange}
                 />
               
                 <select
                   className="form-select"
                   name="gender"
-                  value={formState.gender}
+                  value={formState.gender|| ""}
                   onChange={handleChange}
                 >
                   <option value="">Select Gender</option>
@@ -84,7 +84,7 @@ const Profile = () => {
                   placeholder="Age"
                   name="age"
                   type="text"
-                  value={formState.age}
+                  value={formState.age || ""}
                   onChange={handleChange}
                 />
                 <input
@@ -92,7 +92,7 @@ const Profile = () => {
                   placeholder="Bio"
                   name="bio"
                   type="text"
-                  value={formState.bio}
+                  value={formState.bio || ""}
                   onChange={handleChange}
                 />
                 <input
@@ -100,7 +100,7 @@ const Profile = () => {
                   placeholder="Interests"
                   name="interests"
                   
-                  value={formState.interests}
+                  value={formState.interests|| ""}
                   onChange={handleChange}
                 />
                 <button
