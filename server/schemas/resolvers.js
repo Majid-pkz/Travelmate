@@ -22,16 +22,7 @@ const resolvers = {
     },
 
 
-    //populate('classes').populate({
-    //   path: 'classes',
-    //   populate: 'professor'
-    // });
-
-    // profiles:  async () => {
-    //   const profiles = await Profile.find({}).populate('profileUser').populate('interests').
-    //   populate('createdTrips').;     
-    //   return profiles;
-    // }, 
+  
     profiles:  async () => {
       const profiles = await Profile.find({}).populate('createdTrips').populate({
           path: 'createdTrips',
@@ -40,19 +31,19 @@ const resolvers = {
       return profiles;
     }, 
 
-    me: async (parent, args, context) => {
-      console.log('00000000000000000000000000000000000000000000000------------------------',context)
-      console.log('------------------------this is context.user',context.user)
+    // me: async (parent, args, context) => {
+    //   console.log('00000000000000000000000000000000000000000000000------------------------',context)
+    //   console.log('------------------------this is context.user',context.user)
       
-      if (context.user) {
-        const profiles = await Profile.findOne({profileUser:context.user._id  }).populate('createdTrips').populate({
-          path: 'createdTrips',
-          populate: 'creator tripType'
-        }).populate('profileUser').populate('interests');   
-      return profiles;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
+    //   if (context.user) {
+    //     const profiles = await Profile.findOne({profileUser:context.user._id  }).populate('createdTrips').populate({
+    //       path: 'createdTrips',
+    //       populate: 'creator tripType'
+    //     }).populate('profileUser').populate('interests');   
+    //   return profiles;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
 
  
   
@@ -68,6 +59,20 @@ const resolvers = {
      }
      return profile     
     },
+
+    profileExist: async (parent, args, context) => {
+      if (context.user) {
+        console.log('This is context.user when creating a profile',context.user_id)
+      const isProfileExist = await Profile.findOne({profileUser:context.user._id  })
+      if(isProfileExist){
+      return isProfileExist
+      } else {
+        throw new ApolloError('Profile does not exist')
+      }
+    }
+    throw new AuthenticationError('You need to be logged in!');
+    },
+
     
     
    trips: async () => {
@@ -171,12 +176,18 @@ const resolvers = {
     createProfile: async(parent,params,context)=>{
       console.log('This is context.user when creating a profile');
       if (context.user) {
-      
+        console.log('This is context.user when creating a profile',context.user_id)
+      const isProfileExist = await Profile.findOne({profileUser:context.user._id  })
+      if(!isProfileExist){
       return (await Profile.create(params)).populate('profileUser interests')
+      } else {
+        throw new ApolloError('Profile already exists')
       }
-      throw new AuthenticationError('You need to be logged in!');
-
+    }
+    throw new AuthenticationError('You need to be logged in!');
     },
+
+    
 
     createTripType: async (parent, tripType) => {
       return await TripType.create(tripType);

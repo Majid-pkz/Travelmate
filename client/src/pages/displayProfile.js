@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from '@apollo/client';
 import { QUERY_PROFILE } from '../utils/queries';
+import Upload from '../components/Upload';
 import Auth from '../utils/auth';
 
 const PersonalProfile = () => {
@@ -95,6 +96,7 @@ const PersonalProfile = () => {
           </div>
         </div>
       </div>
+      <Upload/>
     </section>
   );
 };

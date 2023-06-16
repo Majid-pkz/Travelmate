@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { SEARCH_TRIPS } from '../utils/queries';
+import { JOIN_TRIP } from '../utils/mutations';
 
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -37,25 +39,34 @@ const ExpandMore = styled((props) => {
 
 const RecipeReviewCard = ({ trip }) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [joinTrip] = useMutation(JOIN_TRIP);
+  const [joinMessage, setJoinMessage] = React.useState('');
+  const [joined, setJoined] = useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
-    // function convertUnixTimestampToDateString(timestamp) {
-    //   const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
-    
-    //   // Get day, month, and year components
-    //   const day = date.getDate();
-    //   const month = date.getMonth() + 1; // Months are zero-based, so add 1
-    //   const year = date.getFullYear();
-    
-    //   // Format the components as a string in "dd-MM-yyyy" format
-    //   const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
-    
-    //   return formattedDate;
-    // }
-   
-   
+  const handleJoinTrip = async () => {
+    const userId = AuthService.getProfile().data._id;
+    try {
+      const response = await joinTrip({ variables: { joinTripId: trip._id, userJoining: userId } });
+      console.log('Joined trip:', response.data.joinTrip);
+      setJoinMessage('Successfully joined the trip!');
+      setJoined(true);
+    } catch (error) {
+      console.error('Error joining trip:', error);
+      setJoinMessage('Failed to join the trip. Please try again.');
+    }
+  };
+
+  useEffect(() => {
+    const isUserJoined = trip.travelmates.find((travelmate) => travelmate._id === AuthService.getProfile().data._id);
+    setJoined(!!isUserJoined);
+    if (isUserJoined) {
+      setJoinMessage('Successfully joined the trip!');
+    }
+  }, []);
+
   return (
     <Card sx={{ maxWidth: 345, direction: 'row', justifyContent: 'center', alignItems: 'center' }}>
       <CardHeader
@@ -71,11 +82,8 @@ const RecipeReviewCard = ({ trip }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={ <Typography variant="h4" color="text.secondary">
-        {trip.title}
-        
-      </Typography>}
-        subheader= {(trip.endDate)}
+        title={<Typography variant="h4" color="text.secondary">{trip.title}</Typography>}
+        subheader={trip.endDate}
       />
       <CardMedia component="img" height="194" image={oceanView} alt="Paella dish" />
       <CardContent>
@@ -105,9 +113,15 @@ const RecipeReviewCard = ({ trip }) => {
           <Typography paragraph>Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.</Typography>
         </CardContent>
       </Collapse>
+      <CardActions disableSpacing>
+      {!joined && <Button onClick={handleJoinTrip}>Join Trip</Button>}
+        {/* Join Message */}
+        {joinMessage && <p style={{color: 'var(--black)'}}>{joinMessage}</p>}
+      </CardActions>
     </Card>
   );
 };
+
 
 const Trips = () => {
   const location = useLocation();

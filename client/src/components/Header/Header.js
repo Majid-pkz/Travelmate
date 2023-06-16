@@ -37,7 +37,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink onClick={handleShowNavbar} to="/me">
+                <NavLink onClick={handleShowNavbar} to="/create-profile">
                   {/* {Auth.getProfile().data.firstname}'s profile */}
                   Profile
                 </NavLink>

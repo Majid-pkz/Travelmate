@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_PROFILE } from '../utils/mutations';
+import { PROFILE_EXISTS } from '../utils/queries';
 import Auth from '../utils/auth';
 import Upload from '../components/Upload';
 
 const Profile = () => {
+  const [profileExists, setProfileExists] = useState(false);
+  // const [profileExistsError, setProfileExistsError] = useState('');
+  const [redirectToProfile, setRedirectToProfile] = useState(false);
+
   const token = localStorage.getItem('id_token');
   const userData = Auth.getProfile(token);
   const [formState, setFormState] = useState({
@@ -15,9 +20,21 @@ const Profile = () => {
     age: null,
     bio: null
   });
+
   const [createProfile, { error, data }] = useMutation(CREATE_PROFILE);
 
-  // update state based on form input changes
+  const { loading: profileExistsLoading, data: profileExistsData } = useQuery(PROFILE_EXISTS, {
+    variables: { profileUser: userData.data._id },
+  });
+
+  useEffect(() => {
+    if (profileExistsData && profileExistsData.profileExist) {
+      console.log('profile exists', profileExistsData);
+      setProfileExists(true);
+      setRedirectToProfile(true);
+    }
+  }, [profileExistsData]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -27,22 +44,24 @@ const Profile = () => {
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("This is user ID", userData.data._id);
+
     try {
-      console.log("This is form state", formState)
       const { data } = await createProfile({
-        variables: { ...formState, age: formState.age?parseInt(formState.age):null },
+        variables: { ...formState, age: formState.age ? parseInt(formState.age) : null },
       });
-      console.log("This is data", data)
       window.location.href = "/my-profile";
-      // Auth.login(data.createProfile.token);
+
     } catch (e) {
       console.error(e);
     }
   };
+
+  if (redirectToProfile) {
+    // Replace '/my-profile' with the desired redirect path
+    return <Navigate to="/my-profile" replace />;
+  }
 
   return (
     <main className="flex-row justify-center mb-4">
@@ -50,7 +69,7 @@ const Profile = () => {
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Create your Profile</h4>
           <div className="card-body">
-            <Upload />
+          
 
             {data ? (
               <p>
@@ -58,20 +77,20 @@ const Profile = () => {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                
+
                 <input
                   className="form-input"
                   placeholder="Location"
                   name="location"
                   type="text"
-                  value={formState.location|| ""}
+                  value={formState.location || ""}
                   onChange={handleChange}
                 />
-              
+
                 <select
                   className="form-select"
                   name="gender"
-                  value={formState.gender|| ""}
+                  value={formState.gender || ""}
                   onChange={handleChange}
                 >
                   <option value="">Select Gender</option>
@@ -99,8 +118,8 @@ const Profile = () => {
                   className="form-input"
                   placeholder="Interests"
                   name="interests"
-                  
-                  value={formState.interests|| ""}
+
+                  value={formState.interests || ""}
                   onChange={handleChange}
                 />
                 <button

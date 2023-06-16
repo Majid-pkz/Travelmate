@@ -154,3 +154,13 @@ query SearchTrips($departureLocation: String) {
   }
 }
 `;
+
+export const PROFILE_EXISTS = gql`
+query ProfileExist($profileUser: ID!) {
+  profileExist(profileUser: $profileUser) {
+    profileUser {
+      _id
+    }
+  }
+}
+`;

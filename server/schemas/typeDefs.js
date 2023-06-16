@@ -122,9 +122,9 @@ const typeDefs = gql`
     user(id: ID!): User    
     tripType(id: ID!): TripType
     profile(id: ID!): Profile
+    profileExist(profileUser: ID!): Profile
     interest(id:ID!): Interest
 
-    me: Profile
   }
 `;
 

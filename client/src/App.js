@@ -15,7 +15,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import LoginTest from './pages/LoginTest';
 
-import Profile from './pages/creatProfile'
+import Profile from './pages/createProfile'
 import PersonalProfile from './pages/displayProfile'
 import GroupExample from './pages/ProfileCards'
 
@@ -81,11 +81,11 @@ function App() {
               />
 
               <Route
-                path="/me"
+                path="/create-profile"
                 element={<Profile />}
               />
               <Route
-                path="/display"
+                path="/my-profile"
                 element={<PersonalProfile />}
               />
                <Route
