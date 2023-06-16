@@ -2,15 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_PROFILE } from '../utils/mutations';
-import { PROFILE_EXISTS } from '../utils/queries';
+import { PROFILE_EXISTS, QUERY_INTEREST } from '../utils/queries';
 import Auth from '../utils/auth';
 import Upload from '../components/Upload';
+import Select from 'react-select';
+
 
 const Profile = () => {
+  // const mongoose = require('mongoose');
   const [profileExists, setProfileExists] = useState(false);
   // const [profileExistsError, setProfileExistsError] = useState('');
   const [redirectToProfile, setRedirectToProfile] = useState(false);
+  const [selectedInterests, setSelectedInterests] = useState([]);
+  const handleInterestsChange = (selectedOptions) => {
+    setSelectedInterests(selectedOptions);
+  };
 
+  const { loading: interestLoading, data: interestData } = useQuery(QUERY_INTEREST);
+  const interestOptions = interestData?.interests.map((interest) => ({
+    value: interest._id,
+    label: interest.label,
+  }));
+  
   const token = localStorage.getItem('id_token');
   const userData = Auth.getProfile(token);
   const [formState, setFormState] = useState({
@@ -46,10 +59,17 @@ const Profile = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    console.log(selectedInterests[0].value);
 
     try {
       const { data } = await createProfile({
-        variables: { ...formState, age: formState.age ? parseInt(formState.age) : null },
+        variables: {
+          ...formState,
+          age: formState.age ? parseInt(formState.age) : null,
+          interests: selectedInterests.map((interest) => interest.value), // Include selected interests in the form submission
+        
+        },
+        
       });
       window.location.href = "/my-profile";
 
@@ -57,6 +77,7 @@ const Profile = () => {
       console.error(e);
     }
   };
+  
 
   if (redirectToProfile) {
     // Replace '/my-profile' with the desired redirect path
@@ -69,7 +90,7 @@ const Profile = () => {
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Create your Profile</h4>
           <div className="card-body">
-          
+
 
             {data ? (
               <p>
@@ -114,14 +135,24 @@ const Profile = () => {
                   value={formState.bio || ""}
                   onChange={handleChange}
                 />
-                <input
+                {/* <input
                   className="form-input"
                   placeholder="Interests"
                   name="interests"
 
                   value={formState.interests || ""}
                   onChange={handleChange}
-                />
+                /> */}
+                <Select
+                className="form-input"
+                placeholder="Interests"
+                name="interests"
+                value={selectedInterests}
+                onChange={handleInterestsChange}
+                options={interestOptions}
+                isMulti
+              />
+
                 <button
                   className="btn btn-block btn-info"
                   style={{ cursor: 'pointer' }}

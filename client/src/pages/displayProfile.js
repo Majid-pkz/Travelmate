@@ -23,6 +23,7 @@ const PersonalProfile = () => {
     })
       .then(response => {
         setUser(response.data);
+        
       })
       .catch(error => {
         console.error('Error fetching images:', error);
@@ -69,18 +70,19 @@ const PersonalProfile = () => {
 
                     <h6 className="card-title">Bio</h6>
                     <hr className="mt-0 mb-4" />
-                    <p className="card-text">{bio}</p>
+                    <p className="card-text"style={{color: 'var(--black)'}}>{bio}</p>
 
                     <h6 className="card-title">Interests</h6>
                     <hr className="mt-0 mb-4" />
-                    <p className="card-text">{interests.map((interest) => interest.label).join(', ')}</p>
+                    <p className="card-text" style={{color: 'var(--black)'}}>{interests.map((interest) => interest.label).join(', ')}</p>
 
                     <h6 className="card-title">Created Trips</h6>
                     <hr className="mt-0 mb-4" />
                     {createdTrips.map((trip) => (
+                      console.log(trip),
                       <div key={trip.title}>
                         <h6 className="card-title">{trip.title}</h6>
-                        <p className="card-text">Travelmate: {trip?.travelmates && trip.travelmates[0].firstname}</p>
+                        {/* <p className="card-text" style={{color: 'var(--black)'}}>Travelmate: {trip?.travelmates && trip.travelmates[0].firstname}</p> */}
                       </div>
                     ))}
 

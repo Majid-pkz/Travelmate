@@ -53,7 +53,6 @@ const typeDefs = gql`
     verified: Boolean
     subscribed: Boolean
     createdTrips: [Trip!]
-    
     tripCount: Int!
   }
 

@@ -164,3 +164,12 @@ query ProfileExist($profileUser: ID!) {
   }
 }
 `;
+
+export const QUERY_INTEREST = gql`
+query Interests {
+  interests {
+    _id
+    label
+  }
+}
+`;
