@@ -1,15 +1,36 @@
-.container-style{
+.container-style {
     width: 100%;
     position: relative;
-}
-.carousel{
-    display:flex;
+  }
+  
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  
+  .background-image.prev {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .background-image.current {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+  
+  .carousel {
+    display: flex;
     align-items: center;
     justify-content: center;
     padding-bottom: 50px;
     background-color: var(--beige);
-}
-.carousel span{
+  }
+  
+  .carousel span {
     width: 10px;
     height: 10px;
     background-color: var(--black);
@@ -17,4 +38,10 @@
     margin-top: 10px;
     border-radius: 10px;
     cursor: pointer;
-}
+  }
+  
+  .carousel span.active {
+    background-color: var(--beige); /* Customize the active span color */
+  }
+
+  

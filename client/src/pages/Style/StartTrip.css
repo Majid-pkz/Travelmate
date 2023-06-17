@@ -1,26 +1,162 @@
-.custom-datepicker {
-   
-    padding: 15px;
-    border: 1px solid #333333  ;
-    border-radius: 8px;
+main{
+  background-image: url('../../assets/slide2.jpg');
+  padding: 25px 0 25px 0;
+  background-size: cover;
+  height: calc(100vh - 90px);
+}
+/* Custom CSS */
+.custom-card {
+  width: 100%; 
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  opacity: 0.87;
   
-    width: 390px;
-  }
-  .datepicker-container {
-    display: flex;
-    flex-direction: row; /* Display in a row */
-   
-    margin-left: -84px; 
-    margin-top: 20px;
-    margin-bottom: 40px;
-   
-  }
- 
-.close-icon {
-  position: absolute;
-  right: 20px;
-  top: 10%;
-  transform: translateY(-40%);
+}
+
+.custom-card-body {
+  width: 100%; 
+  padding: 0;
+}
+
+.card-header {
+  background-color: var(--black)!important;
+  color: #fff!important;
+  padding: 10px;
+}
+
+/* Form body */
+.trip-form .card-body {
+  
+  padding: 0;
+}
+
+/* Form container */
+.trip-form {
+  padding: 30px;
+  width: 100%;
+  max-width: 900px; 
+  margin: 0 auto;
+}
+
+/* Form header */
+.trip-form .card-header {
+  background-color: var(--black);
+  color: #fff;
+  padding: 10px;
+}
+
+/* Form body */
+.trip-form .card-body {
+  padding: 0;
+}
+
+/* Form input fields */
+.trip-form .form-group {
+  margin-bottom: 20px;
+}
+
+/* Form input labels */
+.trip-form label {
+  font-weight: bold;
+}
+
+/* Form submit button */
+.trip-form button[type="submit"] {
+  background-color: var(--orange);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
   cursor: pointer;
- 
+}
+
+/* Form submit button hover effect */
+.trip-form button[type="submit"]:hover {
+  background-color: var(--yellow);
+}
+
+/* Error message */
+.trip-form .bg-danger {
+  padding: 10px;
+  color: #fff;
+}
+
+/* Link color */
+.trip-form a {
+  color: var(--orange);
+}
+
+/* Datepicker container */
+.trip-form .datepicker-container {
+  position: relative;
+}
+
+/* Datepicker close icon */
+.trip-form .custom-datepicker .react-datepicker__close-icon::after {
+  content: "✕";
+}
+
+/* Datepicker styles */
+.trip-form .custom-datepicker {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* Datepicker hover styles */
+.trip-form .custom-datepicker:hover {
+  border-color: var(--orange);
+}
+
+/* Datepicker focus styles */
+.trip-form .custom-datepicker:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Datepicker close icon styles */
+.trip-form .close-icon {
+  padding-right: 30px;
+}
+
+/* Custom styles for react-datepicker */
+.react-datepicker {
+  font-size: 14px;
+}
+
+/* Custom styles for react-datepicker input */
+.react-datepicker__input-container input {
+  width: 100%;
+}
+
+/* Custom styles for react-datepicker day names */
+.react-datepicker__day-name {
+  font-weight: bold;
+  color: #212529;
+}
+
+/* Custom styles for react-datepicker selected day */
+.react-datepicker__day--selected {
+  background-color: var(--orange);
+  color: #fff;
+}
+
+/* Custom styles for react-datepicker today's day */
+.react-datepicker__day--today {
+  font-weight: bold;
+  color: #212529;
+}
+
+/* Custom styles for react-datepicker outside month days */
+.react-datepicker__day--outside-month {
+  color: #868e96;
+}
+
+/* Custom styles for react-datepicker disabled dates */
+.react-datepicker__day--disabled {
+  color: #ced4da;
+  cursor: not-allowed;
 }
