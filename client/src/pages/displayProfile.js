@@ -9,7 +9,7 @@ import Auth from '../utils/auth';
 const PersonalProfile = () => {
   const token = localStorage.getItem('id_token');
   const userData = Auth.getProfile(token);
-  const { loading, error, data } = useQuery(QUERY_PROFILE, {
+  const { loading, error, data, refetch } = useQuery(QUERY_PROFILE, {
     variables: { profileUser: userData.data._id },
   });
   const [user, setUser] = useState([]);
@@ -98,7 +98,7 @@ const PersonalProfile = () => {
           </div>
         </div>
       </div>
-      <Upload/>
+      <Upload getUserDetails={refetch}/>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import { NavLink, Navigate, Link} from 'react-router-dom';
+import { NavLink, Navigate, Link, useNavigate} from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import './Header.css'
@@ -8,6 +8,7 @@ import './Header.css'
 import Auth from '../../utils/auth';
 
 const Header = () => {
+  const navigate  = useNavigate()
   const [showNavbar, setShowNavbar] = useState(false)
 
   const handleShowNavbar = () => {
@@ -16,7 +17,9 @@ const Header = () => {
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
-    <Navigate to="/" replace />;
+    navigate("/")
+    // or instead of useNavigate:
+    //window.location.href = "/";
   };
 
   return (

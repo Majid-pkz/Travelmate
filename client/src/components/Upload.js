@@ -29,7 +29,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Upload = () => {
+const Upload = ({getUserDetails}) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -52,8 +52,11 @@ const Upload = () => {
           }
         });
         
+        getUserDetails()
         console.log('Image uploaded successfully',selectedFile);
-      } catch (error) {
+      } 
+      
+      catch (error) {
         console.error('Error uploading image:', error);
       }
     }
