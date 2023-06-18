@@ -23,14 +23,9 @@ body {
   position: relative;
 }
 
-.logo {
-}
 
 .menu-icon {
   display: none;
-}
-
-.nav-elements {
 }
 
 .nav-elements ul {
@@ -65,6 +60,7 @@ body {
   height: 2px;
   background-color: #574c4c;
 }
+
 
 @media (max-width: 768px) {
   .nav-elements ul li:not(:last-child) {

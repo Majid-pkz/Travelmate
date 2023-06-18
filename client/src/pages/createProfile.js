@@ -3,15 +3,14 @@ import { Link, Navigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_PROFILE } from '../utils/mutations';
 import { PROFILE_EXISTS, QUERY_INTEREST } from '../utils/queries';
+import '../pages/Style/createProfile.css'
 import Auth from '../utils/auth';
 import Upload from '../components/Upload';
 import Select from 'react-select';
 
 
 const Profile = () => {
-  // const mongoose = require('mongoose');
   const [profileExists, setProfileExists] = useState(false);
-  // const [profileExistsError, setProfileExistsError] = useState('');
   const [redirectToProfile, setRedirectToProfile] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState([]);
   const handleInterestsChange = (selectedOptions) => {
@@ -80,24 +79,23 @@ const Profile = () => {
   
 
   if (redirectToProfile) {
-    // Replace '/my-profile' with the desired redirect path
+    
     return <Navigate to="/my-profile" replace />;
   }
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Create your Profile</h4>
-          <div className="card-body">
+    <main className="custom-profile flex-row justify-center">
+      <div className="col-12 col-lg-8">
+        <div className="card custom-card">
+          <h4 className="card-header text-center p-2">Create your Profile</h4>
 
 
             {data ? (
-              <p>
+              <p style={{ color: "var(--black)", textAlign: "center" }}>
                 Success! You may now head <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
+              <form onSubmit={handleFormSubmit} className="profile-form">
 
                 <input
                   className="form-input"
@@ -144,7 +142,7 @@ const Profile = () => {
                   onChange={handleChange}
                 /> */}
                 <Select
-                className="form-input"
+                className="custom-select"
                 placeholder="Interests"
                 name="interests"
                 value={selectedInterests}
@@ -168,7 +166,6 @@ const Profile = () => {
             )}
           </div>
         </div>
-      </div>
     </main>
   );
 };

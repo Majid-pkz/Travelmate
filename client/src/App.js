@@ -7,13 +7,12 @@ import { setContext } from '@apollo/client/link/context';
 import Home from './pages/Home/Home';
 import Signup from './pages/Signup';
 import FileUpload from './pages/FileUpload'
-import Login from './pages/Login';
 import RecipeReviewCard from './pages/TestCard'
 import Trip from './pages/Trip'
 import StartTrip from './pages/StartTrip'
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import LoginTest from './pages/LoginTest';
+import LoginTest from './pages/Login';
 
 import Profile from './pages/createProfile'
 import PersonalProfile from './pages/displayProfile'

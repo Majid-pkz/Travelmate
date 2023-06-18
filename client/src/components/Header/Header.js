@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink, Navigate, Link} from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import './Header.css'
@@ -18,6 +18,7 @@ const Header = () => {
     Auth.logout();
     <Navigate to="/" replace />;
   };
+
   return (
     <header className="navbar">
       <div className="container">
@@ -49,30 +50,30 @@ const Header = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink onClick={logout}>
+                <Link to="/" onClick={logout}>
                   Logout
-                </NavLink>
+                </Link>
               </li>
             </ul>
           ) : (
             <div className={`nav-elements  ${showNavbar && 'active'}`}>
-            <ul>
-              <li>
-                <NavLink className="home" onClick={handleShowNavbar} to="/">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="login" onClick={handleShowNavbar} to="/login">
-                  Login
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className="signup" onClick={handleShowNavbar} to="/signup">
-                  Signup
-                </NavLink>
-              </li>
-            </ul>
+              <ul>
+                <li>
+                  <NavLink className="home" onClick={handleShowNavbar} to="/">
+                    Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="login" onClick={handleShowNavbar} to="/login">
+                    Login
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="signup" onClick={handleShowNavbar} to="/signup">
+                    Signup
+                  </NavLink>
+                </li>
+              </ul>
             </div>
           )}
         </div>
