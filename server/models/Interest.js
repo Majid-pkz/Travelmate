@@ -6,8 +6,8 @@ const interestSchema = new Schema({
   
 
   label: {
-    type: String,
-    required: true,
+    type: [String]
+   
   },
 
 }
