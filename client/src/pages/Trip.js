@@ -90,14 +90,17 @@ const RecipeReviewCard = ({ trip }) => {
         <Typography variant="h6" color="text.secondary">
           {trip.description}
         </Typography>
+        <Typography variant="h6" color="text.secondary">
+          {trip.departureLocation}
+        </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        {/* <IconButton aria-label="add to favorites">
           <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
+        </IconButton> */}
+        {/* <IconButton aria-label="share">
           <ShareIcon />
-        </IconButton>
+        </IconButton> */}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}

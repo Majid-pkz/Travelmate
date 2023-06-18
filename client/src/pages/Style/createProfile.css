@@ -1,0 +1,93 @@
+.custom-profile{
+    background-image: url('../../assets/nature.jpg');
+    padding: 25px 0 25px 0;
+    background-size: cover;
+    height: 100vh;
+  }
+  /* Custom CSS */
+  .custom-card {
+    width: 100%; 
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.7;
+    
+  }
+  .custom-select{
+    margin-bottom: 10px;
+  }
+  
+  .custom-card-body {
+    width: 100%; 
+    padding: 0;
+  }
+  
+  .card-header {
+    background-color: var(--black)!important;
+    color: #fff!important;
+    padding: 10px;
+  }
+  
+  /* Form body */
+  .profile-form .card-body {
+    
+    padding: 0;
+  }
+  
+  /* Form container */
+  .profile-form {
+    padding: 30px;
+    width: 100%;
+    max-width: 900px; 
+    margin: 0 auto;
+  }
+  
+  /* Form header */
+  .profile-form .card-header {
+    background-color: var(--black);
+    color: #fff;
+    padding: 10px;
+  }
+  
+  /* Form body */
+  .profile-form .card-body {
+    padding: 0;
+  }
+  
+  /* Form input fields */
+  .profile-form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Form input labels */
+  .profile-form label {
+    font-weight: bold;
+  }
+  
+  /* Form submit button */
+  .profile-form button[type="submit"] {
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Form submit button hover effect */
+  .profile-form button[type="submit"]:hover {
+    background-color: var(--yellow);
+  }
+  
+  /* Error message */
+  .profile-form .bg-danger {
+    padding: 10px;
+    color: #fff;
+  }
+  
+  /* Link color */
+  .profile-form a {
+    color: var(--orange);
+  }
+  
+
+  

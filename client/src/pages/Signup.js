@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Tent from '../assets/tent.jpg'
 import { useMutation } from '@apollo/client';
 import { CREATE_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -37,15 +38,15 @@ const Signup = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ backgroundColor: 'var(--beige)' }}>
       <div className="row">
-        <div className="col-sm-6">
-          <div className="d-flex flex-row justify-content-start ps-5 pt-5">
+        <div className="col">
+          <div className="d-flex flex-row justify-content-center align-items-center ps-5 ">
             <i className="fas fa-crow fa-3x me-3" style={{ color: '#709085' }}></i>
           </div>
 
-          <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-4">
-            <h3 className="fw-normal mb-3 ps-5 pb-3 text-center" style={{ letterSpacing: '1px' }}>Sign Up</h3>
+          <div className="d-flex flex-column h-custom-2 pt-4">
+            <h3 className="fw-normal mb-3 pb-3 text-center" style={{ letterSpacing: '1px' }}>Sign Up</h3>
 
             <form onSubmit={handleFormSubmit}>
               <div className="mb-4 mx-5">
@@ -95,8 +96,9 @@ const Signup = () => {
                   onChange={handleChange}
                 />
               </div>
-
-              <button className="btn btn-primary mb-4 px-5 mx-5" type="submit">Submit</button>
+              <div className="d-flex justify-content-center">
+              <button className=" btn btn-primary mb-4 mx-5 w-100" type="submit"style={{backgroundColor: 'var(--orange'}}>Submit</button>
+              </div>
             </form>
 
             {data ? (
@@ -105,7 +107,7 @@ const Signup = () => {
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <p className="ms-2 text-center">
+              <p className="ms-2 text-center" style={{ color: 'var(--orange)' }}>
                 Already have an account?{' '}
                 <Link to="/login" className="link-info text-center" style={{ color: 'var(--orange)' }}>
                   Log in here
@@ -122,7 +124,7 @@ const Signup = () => {
         </div>
 
         <div className="col-sm-6 d-none d-sm-block px-0">
-          {/* Your image or any other content */}
+        <img src={Tent} alt="Signup image" className="w-100" style={{ objectFit: 'cover', objectPosition: 'center', height: 'calc(100vh - 170px)', overflow: 'hidden' }} />
         </div>
       </div>
     </div>

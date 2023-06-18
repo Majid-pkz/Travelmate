@@ -35,7 +35,7 @@ const SearchTrips = () => {
   };
 
   return (
-    <div>
+<div>
       <form onSubmit={handleFormSubmit}>
         <div className="p-1 rounded-pill shadow-sm mb-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.75)' }}>
           <div className="input-group">
@@ -46,6 +46,8 @@ const SearchTrips = () => {
               className="form-control border-0"
               style={{ backgroundColor: 'rgba(255, 255, 255, 0)', borderRadius: '20px' }}
               name="departureLocation"
+              value={formState.departureLocation}
+            onChange={handleChange}
             />
             <button
               id="button-addon1"
@@ -58,6 +60,7 @@ const SearchTrips = () => {
         </div>
       </form>
     </div>
+
 
 
   );
