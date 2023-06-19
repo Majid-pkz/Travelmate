@@ -61,14 +61,16 @@ body {
   background-color: #574c4c;
 }
 
-
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .nav-elements ul li:not(:last-child) {
     margin-right: 30px;
   }
+  .logo img{
+  height: 110px;
+ }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .menu-icon {
     display: block;
     cursor: pointer;

@@ -18,8 +18,6 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -37,7 +35,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const RecipeReviewCard = ({ trip }) => {
+const TripCard = ({ trip }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [joinTrip] = useMutation(JOIN_TRIP);
   const [joinMessage, setJoinMessage] = React.useState('');
@@ -68,39 +66,32 @@ const RecipeReviewCard = ({ trip }) => {
   }, []);
 
   return (
-    <Card sx={{ maxWidth: 345, direction: 'row', justifyContent: 'center', alignItems: 'center' }}>
+    <Card sx={{ maxWidth: '90%', direction: 'row',justifyContent: 'center', alignItems: 'center', marginLeft: '1.2rem' }}>
       <CardHeader
         variant="body5"
         sx={{}}
         avatar={
-          <Avatar sx={{ bgcolor: red[500], width: 60, height: 60 }} aria-label="recipe">
+          <Avatar sx={{ bgcolor: 'var(--orange)', width: 70, height: 70 }} aria-label="recipe">
             {trip.creator.firstname}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={<Typography variant="h4" color="text.secondary">{trip.title}</Typography>}
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
+        title={<Typography variant="h4" color="var(--black)">{trip.title}</Typography>}
         subheader={trip.endDate}
       />
-      <CardMedia component="img" height="194" image={oceanView} alt="Paella dish" />
+      <CardMedia component="img" height="150" image={oceanView} alt="Paella dish" />
       <CardContent>
-        <Typography variant="h6" color="text.secondary">
+        {/* <Typography variant="h6" color="text.secondary">
           {trip.description}
-        </Typography>
-        <Typography variant="h6" color="text.secondary">
-          {trip.departureLocation}
+        </Typography> */}
+        <Typography variant="h6" color="text.secondary"> Departure Location:  {trip.departureLocation}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {/* <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton> */}
-        {/* <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -112,8 +103,8 @@ const RecipeReviewCard = ({ trip }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10 minutes.</Typography>
+          <Typography paragraph style={{color: 'var(--black)', margin: '0'}}>Trip description:</Typography>
+          <Typography paragraph style={{color: 'var(--black)'}}>{trip.description}</Typography>
         </CardContent>
       </Collapse>
       <CardActions disableSpacing>
@@ -150,11 +141,11 @@ const Trips = () => {
 
   return (
     <div>
-      <h1>Trips created by Travelers</h1>
-      <Grid container spacing={2}>
+      <h1 style={{color: 'var(--orange)', fontSize: '35px', textAlign: 'center', paddingTop: '2rem', paddingBottom: '2rem'}}>Trips created by Travelers</h1>
+      <Grid container spacing={2} style={{display: 'flex', justifyContent: 'center'}}>
         {searchTrips.map((trip) => (
           <Grid item xs={12} sm={6} md={4} key={trip._id}>
-            <RecipeReviewCard trip={trip} />
+            <TripCard trip={trip}/>
           </Grid>
         ))}
       </Grid>
