@@ -28,12 +28,12 @@ const tripSchema = new Schema({
   },
 
   startDate: {
-    type: Date,
+    type: String,
   },
   endDate: {
-    type: Date,
-    // Sets a default value of 1 weeks from now
-    default: () => new Date(+new Date() + 7 * 24 * 60 * 60 * 1000),
+    type: String,
+   
+    
   },
   travelmates:[{
     type: Schema.Types.ObjectId,

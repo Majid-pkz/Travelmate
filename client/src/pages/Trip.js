@@ -37,6 +37,16 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+
+  return `${day}/${month}/${year}`;
+};
 const RecipeReviewCard = ({ trip }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [joinTrip] = useMutation(JOIN_TRIP);
@@ -83,9 +93,16 @@ const RecipeReviewCard = ({ trip }) => {
           </IconButton>
         }
         title={<Typography variant="h4" color="text.secondary">{trip.title}</Typography>}
-        subheader={trip.endDate}
+      
+       
       />
-      <CardMedia component="img" height="194" image={oceanView} alt="Paella dish" />
+        <Typography variant="subtitle1" color="text.secondary">
+          From: {` ${formatDate(trip.startDate)}`}
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary">
+          To: {formatDate(trip.endDate)}
+        </Typography>
+      <CardMedia component="img" height="194" image={oceanView} alt="trip-image" />
       <CardContent>
         <Typography variant="h6" color="text.secondary">
           {trip.description}
