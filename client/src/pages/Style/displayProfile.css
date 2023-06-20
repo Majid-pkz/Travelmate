@@ -1,0 +1,13 @@
+.custom-upload {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .custom-upload:hover {
+    background-color: #f8f8f8;
+  }
+  
+  .custom-upload:active {
+    background-color: #eaeaea;
+  }

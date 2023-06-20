@@ -64,10 +64,12 @@ const Upload = ({getUserDetails}) => {
 
   return (
     <div>
-      <h2>Image Upload</h2>
+      <h4 style={{fontSize: '17px'}}>Image Upload</h4>
       <form onSubmit={handleSubmit}>
+        <div>
         <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
+        </div>
+        <button className="btn btn-primary" type="submit">Upload</button>
       </form>
     </div>
   );
