@@ -242,9 +242,10 @@ const resolvers = {
 
     updateProfile:async (parent, params, context) => {
       if (context.user) {  
+        console.log(context.user)
       console.log(params.id)
       return await Profile.findOneAndUpdate(
-        { _id: params.id },
+        { profileUser: context.user._id },
         params,
         { new: true }
       ).populate('profileUser interests createdTrips');

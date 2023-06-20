@@ -81,7 +81,7 @@ const typeDefs = gql`
     updateUser(id: ID!, firstname: String, lastname: String, email: String, password: String): User
 
     updateProfile(id: ID!, location: String, gender: String, age: Int, bio: String,
-      interests: ID, image: String, verified: Boolean,
+      interests: [ID], image: String, verified: Boolean,
       subscribed: Boolean): Profile
 
    
