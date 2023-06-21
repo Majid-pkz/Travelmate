@@ -74,7 +74,14 @@ const resolvers = {
     },
 
     
-    
+    myTrips: async (parent, args, context)=> {
+      // console.log('This is context-------------------------------------------- when myTrip',context.user)
+      
+      // console.log('This is context.user when myTrip',context.user._id)
+        const trips = await Trip.find({travelmates:context.user._id}).populate('creator').populate('tripType').populate('travelmates');     
+        return trips
+      },
+      
    trips: async () => {
       const trips = await Trip.find({}).populate('creator').populate('tripType').populate('travelmates');     
       return trips;

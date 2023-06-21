@@ -35,6 +35,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+  return `${day}/${month}/${year}`;
+};
+
 const TripCard = ({ trip }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [joinTrip] = useMutation(JOIN_TRIP);
@@ -80,9 +88,16 @@ const TripCard = ({ trip }) => {
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title={<Typography variant="h4" color="var(--black)">{trip.title}</Typography>}
-        subheader={trip.endDate}
+        // title={<Typography variant="h4" color="var(--black)">{trip.title}</Typography>}
+        // subheader={trip.endDate}
+        
       />
+      <Typography variant="subtitle1" color="text.secondary">
+          From: {` ${formatDate(trip.startDate)}`}
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary">
+          To: {formatDate(trip.endDate)}
+        </Typography>
       <CardMedia component="img" height="150" image={oceanView} alt="Paella dish" />
       <CardContent>
         {/* <Typography variant="h6" color="text.secondary">
@@ -110,7 +125,9 @@ const TripCard = ({ trip }) => {
       <CardActions disableSpacing>
       {!joined && <Button onClick={handleJoinTrip}>Join Trip</Button>}
         {/* Join Message */}
-        {joinMessage && <p style={{color: 'var(--black)'}}>{joinMessage}</p>}
+        {joinMessage && <p style={{color: 'var(--black)'}}>{joinMessage} <br></br>
+        <a href='/my-upcoming-trips'>View your trips</a>
+        </p>}
       </CardActions>
     </Card>
   );

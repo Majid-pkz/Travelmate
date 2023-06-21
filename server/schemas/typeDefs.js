@@ -90,7 +90,7 @@ const typeDefs = gql`
 
     deleteProfile(id: ID!): Profile 
 
-    # delet user and profile deletion on delete
+    # delete user and profile deletion on delete
     deleteUser(id:ID!): User
 
     joinTrip(id: ID!, userJoining: ID!):Trip  
@@ -123,7 +123,7 @@ const typeDefs = gql`
     profile(id: ID!): Profile
     profileExist(profileUser: ID!): Profile
     interest(id:ID!): Interest
-
+    myTrips(travelmates: ID!): [Trip ]
   }
 `;
 

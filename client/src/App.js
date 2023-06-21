@@ -13,7 +13,7 @@ import StartTrip from './pages/StartTrip'
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import LoginTest from './pages/Login';
-
+import MyUpcomingTrips from './pages/myUpcomingTrips';
 import Profile from './pages/createProfile'
 import PersonalProfile from './pages/displayProfile'
 import GroupExample from './pages/ProfileCards'
@@ -46,60 +46,64 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-          <Header />
-            <Routes>
-              <Route
-                path="/login"
-                element={<LoginTest />}
-              />
-              <Route 
-                path="/signup" 
-                element={<Signup />}
-              />
-              <Route
-                path="/"
-                element={<Home />}
-              />
-              <Route
-                path="/trips"
-                element={<Trip />}
-              />
-              
-              <Route
-                path="/new-trip"
-                element={< StartTrip/>}
-              />
-              <Route
-                path="/single"
-                element={<RecipeReviewCard />}
-              />
+        <Header />
+        <Routes>
+          <Route
+            path="/login"
+            element={<LoginTest />}
+          />
+          <Route
+            path="/signup"
+            element={<Signup />}
+          />
+          <Route
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/trips"
+            element={<Trip />}
+          />
 
-              <Route
-                path="/upload"
-                element={<FileUpload />}
-              />
+          <Route
+            path="/new-trip"
+            element={< StartTrip />}
+          />
+          <Route
+            path="/single"
+            element={<RecipeReviewCard />}
+          />
 
-              <Route
-                path="/create-profile"
-                element={<Profile />}
-              />
-              <Route
-                path="/my-profile"
-                element={<PersonalProfile />}
-              />
-               <Route
-                path="/all-profiles"
-                element={<GroupExample />}
-              />
+          <Route
+            path="/upload"
+            element={<FileUpload />}
+          />
+
+          <Route
+            path="/create-profile"
+            element={<Profile />}
+          />
+          <Route
+            path="/my-profile"
+            element={<PersonalProfile />}
+          />
+          <Route
+            path="/all-profiles"
+            element={<GroupExample />}
+          />
+
+          <Route
+            path="/my-upcoming-trips"
+            element={<MyUpcomingTrips />}
+          />
 
 
 
 
 
-           
-            </Routes>
-          {/* </div> */}
-          <Footer />
+        </Routes>
+        {/* </div> */}
+        <Footer />
         {/* </div> */}
       </Router>
     </ApolloProvider>

@@ -1,28 +1,48 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_TRIPS = gql`
-  query trips {
-    trips {
+// export const QUERY_TRIPS = gql`
+//   query trips {
+//     trips {
+//       _id
+//       creator {
+//         firstname
+//       }
+//       title
+//       description
+//       departureLocation
+//       destination
+//       startDate
+//       endDate
+//       tripType {
+//         tripType
+//       }
+//       meetupPoint
+//       approvedTrip
+//       published
+//       image
+//       travelmates {
+//         firstname
+//         email
+//       }
+//     }
+//   }
+// `;
+
+export const QUERY_MY_TRIPS = gql`
+  query  myTrips($travelmates: ID!) {
+    myTrips(travelmates: $travelmates) {
       _id
-      creator {
-        firstname
-      }
       title
-      description
       departureLocation
+      description
       destination
+      image
       startDate
       endDate
-      tripType {
-        tripType
-      }
-      meetupPoint
-      approvedTrip
-      published
-      image
       travelmates {
-        firstname
+        _id
         email
+        firstname
       }
     }
   }
