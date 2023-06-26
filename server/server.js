@@ -7,7 +7,6 @@ const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 const imageRoutes = require('./schemas/image-routes');
 
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
