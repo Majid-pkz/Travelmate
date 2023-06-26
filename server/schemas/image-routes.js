@@ -36,18 +36,25 @@ const upload = multer({
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-  // verify and add user token
-  authMiddleware({req})
-  console.log("req --------", req.user)
-  await Profile.findOneAndUpdate({
-    profileUser: req.user._id
-  }, {
-    image: req.file.path
-  }, { upsert: true})
-  res.send({
-    message: 'Image uploaded successfully',
-    image: `/${req.file.path}`,
-  });
+  try {
+// verify and add user token
+    authMiddleware({req})
+    console.log("req --------", req.user)
+    await Profile.findOneAndUpdate({
+      profileUser: req.user._id
+    }, {
+      image: req.file.path
+    }, { upsert: true})
+    res.send({
+      message: 'Image uploaded successfully',
+      image: `/${req.file.path}`,
+    });
+  }
+  catch(err) {
+    console.error(err)
+    res.send(500)
+  }
+  
 });
 router.get('/profile',async  (req, res) => {
   authMiddleware({req})
